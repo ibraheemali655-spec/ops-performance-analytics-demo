@@ -1,0 +1,89 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "6923f50736126e51b94d",
+  "position": {
+    "x": 26.072128511365349,
+    "y": 137.22172900718607,
+    "z": 4000,
+    "height": 296.39893465552188,
+    "width": 613.38112866212168,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "gauge",
+    "query": {
+      "queryState": {
+        "MaxValue": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SX_Measures"
+                    }
+                  },
+                  "Property": "Vendor Capacity_SX"
+                }
+              },
+              "queryRef": "SX_Measures.Vendor Capacity_SX",
+              "nativeQueryRef": "Vendor Capacity_SX"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SX_Measures"
+                    }
+                  },
+                  "Property": "Total Volume_SX"
+                }
+              },
+              "queryRef": "SX_Measures.Total Volume_SX",
+              "nativeQueryRef": "Total Volume_SX"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "SX_Measures"
+                  }
+                },
+                "Property": "Total Volume_SX"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Total Volume Vs. Capacity'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

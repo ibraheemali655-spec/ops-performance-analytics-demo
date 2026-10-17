@@ -1,0 +1,24 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IL
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["DataRoot","Jobs I","Transform File (2)","Sample File (2)"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode","DaxQueryView_Desktop"]
+
+ref table DateTableTemplate_f4f94dd3-6677-4a5f-8c9f-bc9f70e59cd4
+ref table DateTable
+ref table LocalDateTable_7705dc45-5a53-4e5b-88d9-47a26f4584c3
+ref table Measuress
+ref table 'Jobs I'
+ref table 'Top N'
+ref table Basis
+ref table TrendCal
+
+

@@ -1,0 +1,366 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "459f52ca95235ca4cfac",
+  "position": {
+    "x": 13.095305758648307,
+    "y": 413.0973725682693,
+    "z": 3000,
+    "height": 307.37667297609676,
+    "width": 1266.5565587363274,
+    "tabOrder": 11001
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Jobs I"
+                    }
+                  },
+                  "Property": "pm_name"
+                }
+              },
+              "queryRef": "Jobs I.pm_name",
+              "nativeQueryRef": "PM",
+              "active": true,
+              "displayName": "PM"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Jobs I"
+                    }
+                  },
+                  "Property": "client_name"
+                }
+              },
+              "queryRef": "Jobs I.client_name",
+              "nativeQueryRef": "Client",
+              "active": true,
+              "displayName": "Client"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Jobs I"
+                    }
+                  },
+                  "Property": "account"
+                }
+              },
+              "queryRef": "Jobs I.account",
+              "nativeQueryRef": "account",
+              "active": false
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "Selected Revenue"
+                }
+              },
+              "queryRef": "Measuress.Selected Revenue",
+              "nativeQueryRef": "Revenue",
+              "displayName": "Revenue"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "Selected Revenue Previous"
+                }
+              },
+              "queryRef": "Measuress.Selected Revenue Previous",
+              "nativeQueryRef": " Prior Revenue",
+              "displayName": " Prior Revenue"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "Selected Difference"
+                }
+              },
+              "queryRef": "Measuress.Selected Difference",
+              "nativeQueryRef": "Δ vs prior",
+              "displayName": "Δ vs prior"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "Selected Difference %"
+                }
+              },
+              "queryRef": "Measuress.Selected Difference %",
+              "nativeQueryRef": "Δ vs prior %",
+              "displayName": "Δ vs prior %"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Measuress"
+                  }
+                },
+                "Property": "Selected Revenue"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "Jobs I.pm_name"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Jobs I"
+                    }
+                  },
+                  "Property": "pm_name"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "Jobs I.client_name"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "Jobs I.account"
+            ],
+            "isCollapsed": true
+          }
+        ],
+        "root": {
+          "children": [
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'EOkafor'"
+                  }
+                }
+              ],
+              "isToggled": true
+            }
+          ]
+        }
+      }
+    ],
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measuress"
+                        }
+                      },
+                      "Property": "Growth Color Selected"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "Measuress.Selected Difference"
+          }
+        },
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Measuress"
+                        }
+                      },
+                      "Property": "Growth Color Selected"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "Measuress.Selected Difference %"
+          }
+        },
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "blankRows": [
+        {
+          "properties": {
+            "showBlankRows": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "blankRowColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 6,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "5e8b1c4f7a2d09e6f3b1",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Jobs I"
+              }
+            },
+            "Property": "pm_name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "2f6c9d3a8b5e01f4c7a2",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Jobs I"
+              }
+            },
+            "Property": "client_name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "6a1e4f8c2d5b09a3e7f4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Jobs I"
+              }
+            },
+            "Property": "account"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

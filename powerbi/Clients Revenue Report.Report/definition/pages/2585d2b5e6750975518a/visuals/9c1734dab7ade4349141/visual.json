@@ -1,0 +1,926 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "9c1734dab7ade4349141",
+  "position": {
+    "x": 16.666752783734207,
+    "y": 84.52424626036634,
+    "z": 3000,
+    "height": 122.61968119461596,
+    "width": 1241.6730823881985,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "deneb7E15AEF80B9E4D4F8E12924291ECE89A",
+    "query": {
+      "queryState": {
+        "dataset": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "TotalRevenue"
+                }
+              },
+              "queryRef": "Measuress.TotalRevenue",
+              "nativeQueryRef": "TotalRevenue"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "PreviousMonthRevenue"
+                }
+              },
+              "queryRef": "Measuress.PreviousMonthRevenue",
+              "nativeQueryRef": "PreviousMonthRevenue"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "MoM%"
+                }
+              },
+              "queryRef": "Measuress.MoM%",
+              "nativeQueryRef": "MoM%"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "PreviousYearRevenue"
+                }
+              },
+              "queryRef": "Measuress.PreviousYearRevenue",
+              "nativeQueryRef": "PreviousYearRevenue"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "TotalRevenue YoY%"
+                }
+              },
+              "queryRef": "Measuress.TotalRevenue YoY%",
+              "nativeQueryRef": "TotalRevenue YoY%"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "Revenue YTD"
+                }
+              },
+              "queryRef": "Measuress.Revenue YTD",
+              "nativeQueryRef": "Revenue YTD"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "Revenue YTD PY"
+                }
+              },
+              "queryRef": "Measuress.Revenue YTD PY",
+              "nativeQueryRef": "Revenue YTD PY"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "Revenue YTD YoY%"
+                }
+              },
+              "queryRef": "Measuress.Revenue YTD YoY%",
+              "nativeQueryRef": "Revenue YTD YoY%"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "Monthly Difference"
+                }
+              },
+              "queryRef": "Measuress.Monthly Difference",
+              "nativeQueryRef": "Monthly Difference"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "YearDifference"
+                }
+              },
+              "queryRef": "Measuress.YearDifference",
+              "nativeQueryRef": "YearDifference"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "Revenue YTD Difference"
+                }
+              },
+              "queryRef": "Measuress.Revenue YTD Difference",
+              "nativeQueryRef": "Revenue YTD Difference"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "KPI Cur Title"
+                }
+              },
+              "queryRef": "Measuress.KPI Cur Title",
+              "nativeQueryRef": "KPI Cur Title"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "KPI YoY Title"
+                }
+              },
+              "queryRef": "Measuress.KPI YoY Title",
+              "nativeQueryRef": "KPI YoY Title"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "KPI YTD Title"
+                }
+              },
+              "queryRef": "Measuress.KPI YTD Title",
+              "nativeQueryRef": "KPI YTD Title"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "MoM Color"
+                }
+              },
+              "queryRef": "Measuress.MoM Color",
+              "nativeQueryRef": "MoM Color"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "YoY% Color"
+                }
+              },
+              "queryRef": "Measuress.YoY% Color",
+              "nativeQueryRef": "YoY% Color"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "YTD% Color"
+                }
+              },
+              "queryRef": "Measuress.YTD% Color",
+              "nativeQueryRef": "YTD% Color"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "MoM Caption"
+                }
+              },
+              "queryRef": "Measuress.MoM Caption",
+              "nativeQueryRef": "MoM Caption"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "YoY Caption"
+                }
+              },
+              "queryRef": "Measuress.YoY Caption",
+              "nativeQueryRef": "YoY Caption"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "YTD Caption"
+                }
+              },
+              "queryRef": "Measuress.YTD Caption",
+              "nativeQueryRef": "YTD Caption"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "MoM Detail"
+                }
+              },
+              "queryRef": "Measuress.MoM Detail",
+              "nativeQueryRef": "MoM Detail"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "YoY Detail"
+                }
+              },
+              "queryRef": "Measuress.YoY Detail",
+              "nativeQueryRef": "YoY Detail"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "YTD Detail"
+                }
+              },
+              "queryRef": "Measuress.YTD Detail",
+              "nativeQueryRef": "YTD Detail"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "MoM Detail BG"
+                }
+              },
+              "queryRef": "Measuress.MoM Detail BG",
+              "nativeQueryRef": "MoM Detail BG"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "YoY Detail BG"
+                }
+              },
+              "queryRef": "Measuress.YoY Detail BG",
+              "nativeQueryRef": "YoY Detail BG"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "YTD Detail BG"
+                }
+              },
+              "queryRef": "Measuress.YTD Detail BG",
+              "nativeQueryRef": "YTD Detail BG"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "vega": [
+        {
+          "properties": {
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'vegaLite'"
+                }
+              }
+            },
+            "jsonSpec": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"$schema\": \"https://vega.github.io/schema/vega-lite/v5.json\", \"data\": {\"name\": \"dataset\"}, \"config\": {\"view\": {\"stroke\": null}}, \"spacing\": 6, \"hconcat\": [{\"width\": 388, \"height\": 110, \"transform\": [{\"window\": [{\"op\": \"row_number\", \"as\": \"rn\"}]}, {\"filter\": \"datum.rn == 1\"}, {\"calculate\": \"datum[\\\"MoM Caption\\\"] + \\\"   \\\" + format(datum[\\\"PreviousMonthRevenue\\\"], \\\"$,.4~s\\\")\", \"as\": \"priorTxt\"}], \"layer\": [{\"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"top\", \"fontSize\": 12, \"fontWeight\": 700, \"fill\": \"#8A8A8A\"}, \"encoding\": {\"text\": {\"field\": \"KPI Cur Title\"}, \"x\": {\"value\": 6}, \"y\": {\"value\": 2}}}, {\"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"top\", \"fontSize\": 32, \"fontWeight\": 700, \"fill\": \"#1A1A1A\"}, \"encoding\": {\"text\": {\"field\": \"TotalRevenue\", \"type\": \"quantitative\", \"format\": \"$,.4~s\"}, \"x\": {\"value\": 6}, \"y\": {\"value\": 18}}}, {\"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"top\", \"fontSize\": 12, \"fontWeight\": 400, \"fill\": \"#5A5A5A\"}, \"encoding\": {\"text\": {\"field\": \"priorTxt\"}, \"x\": {\"value\": 6}, \"y\": {\"value\": 62}}}, {\"mark\": {\"type\": \"rect\", \"cornerRadius\": 5}, \"encoding\": {\"x\": {\"value\": 6}, \"x2\": {\"value\": 190}, \"y\": {\"value\": 78}, \"y2\": {\"value\": 100}, \"color\": {\"field\": \"MoM Detail BG\", \"type\": \"nominal\", \"scale\": null, \"legend\": null}}}, {\"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"middle\", \"fontSize\": 13, \"fontWeight\": 700}, \"encoding\": {\"text\": {\"field\": \"MoM Detail\"}, \"x\": {\"value\": 15}, \"y\": {\"value\": 89}, \"color\": {\"field\": \"MoM Color\", \"type\": \"nominal\", \"scale\": null, \"legend\": null}}}]}, {\"width\": 388, \"height\": 110, \"transform\": [{\"window\": [{\"op\": \"row_number\", \"as\": \"rn\"}]}, {\"filter\": \"datum.rn == 1\"}, {\"calculate\": \"datum[\\\"YoY Caption\\\"] + \\\"   \\\" + format(datum[\\\"PreviousYearRevenue\\\"], \\\"$,.4~s\\\")\", \"as\": \"priorTxt\"}], \"layer\": [{\"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"top\", \"fontSize\": 12, \"fontWeight\": 700, \"fill\": \"#8A8A8A\"}, \"encoding\": {\"text\": {\"field\": \"KPI YoY Title\"}, \"x\": {\"value\": 6}, \"y\": {\"value\": 2}}}, {\"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"top\", \"fontSize\": 32, \"fontWeight\": 700, \"fill\": \"#1A1A1A\"}, \"encoding\": {\"text\": {\"field\": \"TotalRevenue\", \"type\": \"quantitative\", \"format\": \"$,.4~s\"}, \"x\": {\"value\": 6}, \"y\": {\"value\": 18}}}, {\"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"top\", \"fontSize\": 12, \"fontWeight\": 400, \"fill\": \"#5A5A5A\"}, \"encoding\": {\"text\": {\"field\": \"priorTxt\"}, \"x\": {\"value\": 6}, \"y\": {\"value\": 62}}}, {\"mark\": {\"type\": \"rect\", \"cornerRadius\": 5}, \"encoding\": {\"x\": {\"value\": 6}, \"x2\": {\"value\": 190}, \"y\": {\"value\": 78}, \"y2\": {\"value\": 100}, \"color\": {\"field\": \"YoY Detail BG\", \"type\": \"nominal\", \"scale\": null, \"legend\": null}}}, {\"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"middle\", \"fontSize\": 13, \"fontWeight\": 700}, \"encoding\": {\"text\": {\"field\": \"YoY Detail\"}, \"x\": {\"value\": 15}, \"y\": {\"value\": 89}, \"color\": {\"field\": \"YoY% Color\", \"type\": \"nominal\", \"scale\": null, \"legend\": null}}}]}, {\"width\": 388, \"height\": 110, \"transform\": [{\"window\": [{\"op\": \"row_number\", \"as\": \"rn\"}]}, {\"filter\": \"datum.rn == 1\"}, {\"calculate\": \"datum[\\\"YTD Caption\\\"] + \\\"   \\\" + format(datum[\\\"Revenue YTD PY\\\"], \\\"$,.4~s\\\")\", \"as\": \"priorTxt\"}], \"layer\": [{\"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"top\", \"fontSize\": 12, \"fontWeight\": 700, \"fill\": \"#8A8A8A\"}, \"encoding\": {\"text\": {\"field\": \"KPI YTD Title\"}, \"x\": {\"value\": 6}, \"y\": {\"value\": 2}}}, {\"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"top\", \"fontSize\": 32, \"fontWeight\": 700, \"fill\": \"#1A1A1A\"}, \"encoding\": {\"text\": {\"field\": \"Revenue YTD\", \"type\": \"quantitative\", \"format\": \"$,.4~s\"}, \"x\": {\"value\": 6}, \"y\": {\"value\": 18}}}, {\"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"top\", \"fontSize\": 12, \"fontWeight\": 400, \"fill\": \"#5A5A5A\"}, \"encoding\": {\"text\": {\"field\": \"priorTxt\"}, \"x\": {\"value\": 6}, \"y\": {\"value\": 62}}}, {\"mark\": {\"type\": \"rect\", \"cornerRadius\": 5}, \"encoding\": {\"x\": {\"value\": 6}, \"x2\": {\"value\": 190}, \"y\": {\"value\": 78}, \"y2\": {\"value\": 100}, \"color\": {\"field\": \"YTD Detail BG\", \"type\": \"nominal\", \"scale\": null, \"legend\": null}}}, {\"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"middle\", \"fontSize\": 13, \"fontWeight\": 700}, \"encoding\": {\"text\": {\"field\": \"YTD Detail\"}, \"x\": {\"value\": 15}, \"y\": {\"value\": 89}, \"color\": {\"field\": \"YTD% Color\", \"type\": \"nominal\", \"scale\": null, \"legend\": null}}}]}]}'"
+                }
+              }
+            },
+            "jsonConfig": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{}'"
+                }
+              }
+            },
+            "enableTooltips": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "enableContextMenu": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "enableHighlight": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "enableSelection": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'6.4.1'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stateManagement": [
+        {
+          "properties": {
+            "viewportHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "104.61968119461596D"
+                }
+              }
+            },
+            "viewportWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "1223.6730823881985D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "developer": [
+        {
+          "properties": {
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'1.9.1.0'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "ab663b697d508a7fbcb9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "TotalRevenue"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b73b07ba40180c993e25",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "PreviousMonthRevenue"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9b68a78ac3be6d9422d5",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "MoM%"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "fe311802c15f751c2711",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "PreviousYearRevenue"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "06e7aee0dbdcb2a30b34",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "TotalRevenue YoY%"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "bee3e9a0da908f942a77",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "Revenue YTD"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b0fc1f45dd740b8188b9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "Revenue YTD PY"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "4919b616658ec6758fad",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "Revenue YTD YoY%"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "aa369f597b2c68713c00",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "Monthly Difference"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0e98e81ca3250d1d6ce5",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "YearDifference"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "2035b1fcd12d6543f389",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "Revenue YTD Difference"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "53f9f8958566a6f2473e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "KPI Cur Title"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "fc7590094c19958558cb",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "KPI YoY Title"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0acb75a1a5ef929914b9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "KPI YTD Title"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "93248cfccf23c9eaee13",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "MoM Color"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a3da7050cbb2b7935244",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "YoY% Color"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "6885c660a9847056b9ad",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "YTD% Color"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c487619d4cdb37542989",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "MoM Caption"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c2b07cf2addb17c2dbaf",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "YoY Caption"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b14cafb8a67c696bf51c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "YTD Caption"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "dbe66a88e61d07ab35aa",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "MoM Detail"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a1eb2fef66c9ef1f7834",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "YoY Detail"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "52024774e0082a5e5cda",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "YTD Detail"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "6ec98a106b2219b62985",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "MoM Detail BG"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "62fa892e73f1abb5500b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "YoY Detail BG"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "3e9eb016b98cca4fa367",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measuress"
+              }
+            },
+            "Property": "YTD Detail BG"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

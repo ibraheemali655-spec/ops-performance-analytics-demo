@@ -1,0 +1,838 @@
+table Measuress
+	lineageTag: 75aa0ec1-0c55-4cbf-ab66-dab37513edad
+
+	measure TotalRevenue = ```
+			
+			SUMX(
+			    SUMMARIZE(
+			        'Jobs I',
+			        'Jobs I'[project_id],
+			        "RevenuePerProject", MAX('Jobs I'[project_total_agreed_e])
+			    ),
+			    [RevenuePerProject]
+			)
+			
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: afff89b5-ded6-4835-85a8-bb7e8be4e378
+
+	measure 'TotalRevenue YoY%' = ```
+			
+			IF(
+			    ISFILTERED('DateTable'[Date]),
+			    ERROR("Time intelligence quick measures can only be grouped or filtered by the Power BI-provided date hierarchy or primary date column."),
+			    
+			    VAR __PREV_YEAR = [PreviousYearRevenue]
+			    VAR __CURR_YEAR = [TotalRevenue]
+			    
+			    RETURN
+			        IF(
+			            (ISBLANK(__CURR_YEAR) || __CURR_YEAR = 0) && (ISBLANK(__PREV_YEAR) || __PREV_YEAR = 0),
+			            "-",  -- Return dash if both current and previous year are blank or zero
+			            IF(
+			                __PREV_YEAR = 0,
+			                1,  -- Return 100% if previous year is 0 and current year is not zero
+			                DIVIDE(__CURR_YEAR - __PREV_YEAR, __PREV_YEAR)
+			            )
+			        )
+			)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3601100b-1fb7-475f-9aed-b2414065f472
+
+		extendedProperty MeasureTemplate =
+				{
+				  "version": 0,
+				  "daxTemplateName": "YearOverYear"
+				}
+
+	measure TotalVolumePerService =
+			
+			SUMX(
+			    SUMMARIZE(
+			        'Jobs I',
+			        'Jobs I'[project_id], 'Jobs I'[Target], 'Jobs I'[service],
+			        "VolumePerJob", MAX('Jobs I'[project_volume])
+			    ),
+			    [VolumePerJob]
+			)
+		formatString: #,0.00
+		lineageTag: 1ddafacd-6f76-4b12-8229-c849ad0fb1c9
+
+	measure AverageRevenue2023 = ```
+			DIVIDE(
+			CALCULATE(
+			    [TotalRevenue],
+			    YEAR(DateTable[Date]) = 2023
+			),12)
+			
+			```
+		formatString: #,0.00
+		lineageTag: 8449f199-df66-49e7-82e1-b4403553d1ad
+
+	measure AverageRevenue2024 = ```
+			DIVIDE(
+			CALCULATE(
+			    [TotalRevenue],
+			    YEAR(DateTable[Date]) = 2024
+			),12)
+			
+			```
+		formatString: #,0.00
+		lineageTag: 60ad0dd3-496d-4c80-ba34-7a5936ea8a48
+
+	measure YearDifference = ```
+			[TotalRevenue] - [PreviousYearRevenue] 
+			```
+		formatString: #,0.00
+		lineageTag: a69a30ac-47cb-491d-ade0-72d98f03ef29
+
+	measure PreviousYearRevenue = ```
+			
+			CALCULATE(
+			    [TotalRevenue],
+			    SAMEPERIODLASTYEAR(DateTable[Date])
+			)
+			
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: da89d467-bca0-4fb6-8039-6b741fbef4dd
+
+	measure AverageRevenue2022 = ```
+			DIVIDE(
+			CALCULATE(
+			    [TotalRevenue],
+			    YEAR(DateTable[Date]) = 2022
+			),12)
+			
+			```
+		formatString: "₪"#,0.###############;-"₪"#,0.###############;"₪"#,0.###############
+		lineageTag: b8de0aa2-34e1-4d15-8ea7-1ddf6201a2c3
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IL"}
+
+	measure AverageRevenue2021 = ```
+			DIVIDE(
+			CALCULATE(
+			    [TotalRevenue],
+			    YEAR(DateTable[Date]) = 2021
+			),12)
+			
+			```
+		formatString: "₪"#,0.###############;-"₪"#,0.###############;"₪"#,0.###############
+		lineageTag: 6d5ce473-710b-449d-8ad3-4195b5f4d8c5
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IL"}
+
+	measure AverageRevenue2020 = ```
+			DIVIDE(
+			CALCULATE(
+			    [TotalRevenue],
+			    YEAR(DateTable[Date]) = 2020
+			),12)
+			
+			```
+		formatString: "₪"#,0.###############;-"₪"#,0.###############;"₪"#,0.###############
+		lineageTag: 0e48619d-efae-4b59-ac5a-7fbd5c791ee7
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IL"}
+
+	measure AverageTasksPerMonth =
+			
+			DIVIDE(
+			    COUNTROWS('Jobs I'), -- Count the number of rows (tasks)
+			    DISTINCTCOUNT('DateTable'[Month]) -- Count distinct months in the Date table
+			)
+		lineageTag: e93b3d52-f315-4820-a037-645297ddee0e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotalVolumePerProject =
+			
+			SUMX(
+			    SUMMARIZE(
+			        'Jobs I',
+			        'Jobs I'[project_id],
+			        "VolumePerJob", MAX('Jobs I'[project_volume])
+			    ),
+			    [VolumePerJob]
+			)
+		lineageTag: d1d13108-61c7-41b6-87f4-ac93eed60dcb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'TotalRevenue USD' = [TotalRevenue] * 1.1
+		formatString: "₪"#,0.###############;-"₪"#,0.###############;"₪"#,0.###############
+		lineageTag: af36b78f-d034-4274-b6ab-97d0cdd88ce2
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IL"}
+
+	measure PreviousMonthRevenue = ```
+			
+			CALCULATE(
+			    [TotalRevenue], 
+			    PREVIOUSMONTH(DateTable[Date])
+			)
+			
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 49596f25-a13b-499b-883f-bc4ad82fab84
+
+	measure MoM% = ```
+			
+			VAR __PREV_MONTH = [PreviousMonthRevenue]
+			VAR __CURR_MONTH = [TotalRevenue]
+			
+			RETURN
+			    IF(
+			        (ISBLANK(__CURR_MONTH) || __CURR_MONTH = 0) && (ISBLANK(__PREV_MONTH) || __PREV_MONTH = 0),
+			        "-",  -- Return dash if both current and previous month are blank or zero
+			        IF(
+			            __PREV_MONTH = 0,
+			            1,  -- Return 100% if previous month is 0 and current month is not zero
+			            DIVIDE(__CURR_MONTH - __PREV_MONTH, __PREV_MONTH)
+			        )
+			    )
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: cefbc72c-2072-4fa4-878e-6ae231683dda
+
+	measure 'Monthly Difference' = [TotalRevenue] - [PreviousMonthRevenue]
+		formatString: #,0.00
+		lineageTag: eacbcb63-4ef5-4493-8eb6-427a410d3467
+
+	measure RevenueChange = ```
+			
+			VAR __PREV_MONTH = CALCULATE([TotalRevenue], DATEADD(DateTable[Date], -1, MONTH))
+			VAR __CURR_MONTH = [TotalRevenue]
+			
+			RETURN 
+			    IF(
+			        __CURR_MONTH < __PREV_MONTH,  -- Revenue dropped
+			        __CURR_MONTH - __PREV_MONTH,  -- Return negative change
+			        BLANK()  -- Ignore increases
+			    )
+			
+			```
+		formatString: "₪"#,0.###############;-"₪"#,0.###############;"₪"#,0.###############
+		lineageTag: 66cdf055-f823-48b1-9575-b1bf091899f9
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IL"}
+
+	measure AvgProjectMargin% =
+			
+			AVERAGEX(
+			    SUMMARIZE(
+			        'Jobs I',
+			        'Jobs I'[project_id],
+			        "MarginPerProject", MAX('Jobs I'[Margin])
+			    ),
+			    [MarginPerProject]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 9378b48b-4b6a-486f-9008-dabc24af7722
+
+	measure TotalRevenueByTargt = ```
+			
+			CALCULATE(
+			    [TotalRevenue],
+			    ALLEXCEPT('Jobs I', 'Jobs I'[Target])
+			)
+			
+			```
+		formatString: "₪"#,0.###############;-"₪"#,0.###############;"₪"#,0.###############
+		lineageTag: 51db3bbf-96ed-48fb-abc3-d17f32f8e5f5
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IL"}
+
+	measure 'Target Rank by Revenue' = ```
+			
+			RANKX(
+			    ALLSELECTED('Jobs I'[Target]),
+			    [TotalRevenueByTargt],
+			    ,
+			    DESC,
+			    DENSE
+			)
+			
+			```
+		formatString: 0
+		lineageTag: a0077d37-f806-405b-9044-432528c30673
+
+	measure 'Revenue by Language Group' = ```
+			
+			SUMX(
+			    SUMMARIZE(
+			        'Jobs I',
+			        'Jobs I'[project_id],
+			        "Rev", MAX('Jobs I'[project_total_agreed_e])
+			    ),
+			    [Rev]
+			)
+			
+			```
+		formatString: "₪"#,0.###############;-"₪"#,0.###############;"₪"#,0.###############
+		lineageTag: d8f832ef-e0bd-458d-97bb-3b8e28fbabb9
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IL"}
+
+	measure ArabicEnglishRevenue = ```
+			
+			CALCULATE(
+			    [Revenue by Language Group],
+			    'Jobs I'[LanguageGroup] = "Arabic-English"
+			)
+			
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: a6b0d6f9-e6e0-4802-a28b-71211163ff11
+
+	measure 'ArabicEnglish % of Revenue' = ```
+			
+			DIVIDE([ArabicEnglishRevenue], [TotalRevenue])
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 84e9d208-472f-46a2-bc91-5fa85baf9d98
+
+	measure OtherRevenue = [TotalRevenue] - [ArabicEnglishRevenue]
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: bee606c1-45c5-4d4b-87d5-f36659264e35
+
+	measure 'Average Monthly ArabicEnglish %' = ```
+			
+			AVERAGEX(
+			    VALUES('DateTable'[Month]), 
+			    [ArabicEnglish % of Revenue]
+			)
+			
+			```
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		lineageTag: 3c968387-4db7-4e67-a5eb-cbca457e167a
+
+	measure 'Average Monthly ArabicEnglish Revenue' = ```
+			
+			AVERAGEX(
+			    VALUES('DateTable'[Month]), 
+			    [ArabicEnglishRevenue]
+			)
+			
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 4b1f4717-52d1-4992-b417-ef7aa015eb07
+
+	measure AverageRevenue2025 = ```
+			DIVIDE(
+			CALCULATE(
+			    [TotalRevenue],
+			    YEAR(DateTable[Date]) = 2025
+			),8)
+			
+			```
+		formatString: "₪"#,0.###############;-"₪"#,0.###############;"₪"#,0.###############
+		lineageTag: 1bb0dcdd-98c8-4186-85ab-5f610482df26
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IL"}
+
+	measure Average_monthly_volume_Oakford_A =
+			
+			CALCULATE (
+			    AVERAGEX (
+			        VALUES ( DateTable[Month] ),
+			        CALCULATE ( [TotalVolumePerProject] )
+			    ),
+			    'Jobs I'[client_name] = "Oakford Media Localization",
+			    'Jobs I'[account] = "Oakford Account A"
+			)
+		lineageTag: 38e99943-0c38-4c18-826e-55635cb97add
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Average_monthly_volume_Oakford_B =
+			
+			CALCULATE (
+			    AVERAGEX (
+			        VALUES ( DateTable[Month] ),
+			        CALCULATE ( [TotalVolumePerProject] )
+			    ),
+			    'Jobs I'[client_name] = "Oakford Media Localization",
+			    'Jobs I'[account] = "Oakford Account B"
+			)
+		lineageTag: 4b05b192-c446-4251-be88-989c312e1435
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue Rank' = ```
+			
+			SWITCH (
+			    TRUE (),
+			    ISINSCOPE ( 'Jobs I'[Target] ),
+			        RANKX ( ALLSELECTED ( 'Jobs I'[source], 'Jobs I'[Target] ), [TotalRevenue],, DESC, DENSE ),
+			    ISINSCOPE ( 'Jobs I'[account] ),
+			        RANKX ( ALLSELECTED ( 'Jobs I'[account] ), [TotalRevenue],, DESC, DENSE ),
+			    ISINSCOPE ( 'Jobs I'[client_name] ),
+			        RANKX ( ALLSELECTED ( 'Jobs I'[client_name] ), [TotalRevenue],, DESC, DENSE )
+			)
+			
+			```
+		formatString: 0
+		displayFolder: 03 Ranking
+		lineageTag: a4357d65-7e4a-432f-9a3f-8585dccc7637
+
+	measure 'Top N Flag' = IF ( [Revenue Rank] <= [Top N Value], 1, 0 )
+		formatString: 0
+		displayFolder: 03 Ranking
+		lineageTag: 9ed6f3fe-a2fb-48e1-88fd-f20a390112fb
+
+	measure 'Revenue Share %' = DIVIDE ( [TotalRevenue], CALCULATE ( [TotalRevenue], ALLSELECTED ( 'Jobs I' ) ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 04 Share
+		lineageTag: 3205a8fa-1a66-4af6-888e-01d23525f58a
+
+	measure 'Cumulative Revenue Share %' = ```
+			
+			VAR CurrentRev = [TotalRevenue]
+			VAR HigherOrEqual =
+			    FILTER ( ALLSELECTED ( 'Jobs I'[client_name] ), [TotalRevenue] >= CurrentRev )
+			VAR CumRev = CALCULATE ( [TotalRevenue], HigherOrEqual )
+			VAR Denom = CALCULATE ( [TotalRevenue], ALLSELECTED ( 'Jobs I'[client_name] ) )
+			RETURN DIVIDE ( CumRev, Denom )
+			
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 04 Share
+		lineageTag: d4602128-5635-4aed-a7a8-b1a02ca7e566
+
+	measure 'Growth Status YoY' = ```
+			
+			VAR Cur = [TotalRevenue]
+			VAR Prior = [PreviousYearRevenue]
+			RETURN
+			SWITCH (
+			    TRUE (),
+			    ( Prior = 0 || ISBLANK ( Prior ) ) && Cur > 0, "New",
+			    Cur = 0 && Prior > 0, "Lost",
+			    Cur > Prior * 1.05, "Growing",
+			    Cur < Prior * 0.95, "Declining",
+			    "Stable"
+			)
+			
+			```
+		displayFolder: 05 Growth
+		lineageTag: 1b150462-d8be-4e8d-b702-c07e2a767bd3
+
+	measure 'Growth Status MoM' = ```
+			
+			VAR Cur = [TotalRevenue]
+			VAR Prior = [PreviousMonthRevenue]
+			RETURN
+			SWITCH (
+			    TRUE (),
+			    ( Prior = 0 || ISBLANK ( Prior ) ) && Cur > 0, "New",
+			    Cur = 0 && Prior > 0, "Lost",
+			    Cur > Prior * 1.05, "Growing",
+			    Cur < Prior * 0.95, "Declining",
+			    "Stable"
+			)
+			
+			```
+		displayFolder: 05 Growth
+		lineageTag: 476e9f65-bec5-49a8-9bf4-c653f72dc1a2
+
+	measure 'Growth Color' = ```
+			
+			SWITCH ( [Growth Status YoY],
+			    "Growing", "#3A7D44", "New", "#1A5C35",
+			    "Declining", "#CD4040", "Lost", "#A83030",
+			    "#5A5A5A"
+			)
+			
+			```
+		displayFolder: 05 Growth
+		lineageTag: 6c004c7b-f61f-4676-8bbc-5cbe4276882c
+
+	measure 'Rolling 3M Revenue' = CALCULATE ( [TotalRevenue], DATESINPERIOD ( 'DateTable'[Date], MAX ( 'DateTable'[Date] ), -3, MONTH ) )
+		formatString: \$#,0
+		displayFolder: 06 Trend
+		lineageTag: ac9222bc-000f-48e9-ab56-ace8096eeeb7
+
+	measure 'Trailing 12M Revenue' = CALCULATE ( [TotalRevenue], DATESINPERIOD ( 'DateTable'[Date], MAX ( 'DateTable'[Date] ), -12, MONTH ) )
+		formatString: \$#,0
+		displayFolder: 06 Trend
+		lineageTag: 8cc99bdd-385a-431e-a1ae-5a09b8bc9330
+
+	measure 'Revenue YTD' = VAR Yr = MAX ( 'DateTable'[Year] ) VAR Mo = MAX ( 'DateTable'[Month Number] ) RETURN CALCULATE ( [TotalRevenue], REMOVEFILTERS ( 'DateTable' ), REMOVEFILTERS ( 'LocalDateTable_7705dc45-5a53-4e5b-88d9-47a26f4584c3' ), 'DateTable'[Year] = Yr, 'DateTable'[Month Number] <= Mo )
+		formatString: \$#,0
+		displayFolder: 06 Trend
+		lineageTag: b82bd681-66c7-47db-adf4-fdffdfceb25b
+
+	measure 'Revenue YTD PY' = VAR Yr = MAX ( 'DateTable'[Year] ) - 1 VAR Mo = MAX ( 'DateTable'[Month Number] ) RETURN CALCULATE ( [TotalRevenue], REMOVEFILTERS ( 'DateTable' ), REMOVEFILTERS ( 'LocalDateTable_7705dc45-5a53-4e5b-88d9-47a26f4584c3' ), 'DateTable'[Year] = Yr, 'DateTable'[Month Number] <= Mo )
+		formatString: \$#,0
+		displayFolder: 06 Trend
+		lineageTag: ed952584-b5b9-4518-bf8b-6a4b7e89530c
+
+	measure 'Active Language Pairs' = COUNTROWS ( SUMMARIZE ( 'Jobs I', 'Jobs I'[source], 'Jobs I'[Target] ) )
+		formatString: #,0
+		displayFolder: 06 Trend
+		lineageTag: 81380011-96ea-4f27-9503-5f56859ea321
+
+	measure 'Page Title' = "Client Revenue — " & SELECTEDVALUE ( 'DateTable'[Month], "All months" ) & " " & SELECTEDVALUE ( 'DateTable'[Year], "All years" )
+		displayFolder: 07 UI
+		lineageTag: d8f0c066-ff4c-477c-8582-7ebc9740d67a
+
+	measure 'Page Title Overview' = "Client Revenue Overview — " & SELECTEDVALUE ( 'DateTable'[Month], "All months" ) & " " & SELECTEDVALUE ( 'DateTable'[Year], "All years" )
+		displayFolder: 07 UI
+		lineageTag: 4b8f22dd-3313-45b1-8324-1122872e9cb2
+
+	measure 'Page Title Growing' = "Growing Client Revenue — " & SELECTEDVALUE ( 'DateTable'[Month], "All months" ) & " " & SELECTEDVALUE ( 'DateTable'[Year], "All years" )
+		displayFolder: 07 UI
+		lineageTag: b07a9c38-2b6c-4ae1-bfaa-d789e1454b46
+
+	measure 'Page Title Declining' = "Declining Client Revenue — " & SELECTEDVALUE ( 'DateTable'[Month], "All months" ) & " " & SELECTEDVALUE ( 'DateTable'[Year], "All years" )
+		displayFolder: 07 UI
+		lineageTag: 7e4312df-7158-4107-a9fe-5b73bc56385e
+
+	measure 'Revenue YTD Difference' = [Revenue YTD] - [Revenue YTD PY]
+		formatString: \$#,0
+		displayFolder: 06 Trend
+		lineageTag: 53b13cfd-1fe6-43bf-9d6a-920d6f3fcd37
+
+	measure 'Revenue YTD YoY%' = DIVIDE ( [Revenue YTD Difference], [Revenue YTD PY] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 06 Trend
+		lineageTag: 053e6184-0338-4a61-9214-0521babd3387
+
+	measure 'Selected Basis' = SELECTEDVALUE ( 'Basis'[Basis], "YoY" )
+		displayFolder: 08 Basis
+		lineageTag: 8b6d782c-f9d1-400a-a3b2-59fddef21597
+
+	measure 'Selected Difference' = SWITCH ( [Selected Basis], "MoM", [Monthly Difference], "YoY", [YearDifference], "YTD", [Revenue YTD Difference], [YearDifference] )
+		formatString: \$#,0
+		displayFolder: 08 Basis
+		lineageTag: 9cad3d43-2300-4992-a14a-51cf85934cb3
+
+	measure 'Selected Difference %' = SWITCH ( [Selected Basis], "MoM", DIVIDE ( [Monthly Difference], [PreviousMonthRevenue] ), "YoY", DIVIDE ( [YearDifference], [PreviousYearRevenue] ), "YTD", DIVIDE ( [Revenue YTD Difference], [Revenue YTD PY] ), DIVIDE ( [YearDifference], [PreviousYearRevenue] ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 08 Basis
+		lineageTag: 324ae3a3-a885-4265-b27e-6c4360c6779d
+
+	measure 'Client Status' = VAR CurrMonth = [TotalRevenue] VAR Roll3 = [Rolling 3M Revenue] VAR Trail12 = [Trailing 12M Revenue] VAR PriorRev = Trail12 - CurrMonth VAR CurrYTD = [Revenue YTD] VAR PrevYTD = [Revenue YTD PY] RETURN SWITCH ( TRUE ( ), CurrMonth > 0 && PriorRev = 0, "New", CurrMonth > 0 && ( PrevYTD = 0 || CurrYTD >= PrevYTD * 1.05 ), "Growing", CurrMonth > 0 && CurrYTD <= PrevYTD * 0.95, "Declining", CurrMonth > 0, "Stable", Roll3 > 0, "Stale", Trail12 > 0, "Dropped", BLANK ( ) )
+		displayFolder: 09 Status
+		lineageTag: 22d99d0b-3e0e-406a-8d1e-517828805ae6
+
+	measure 'Growing Clients' = COUNTROWS ( FILTER ( ALL ( 'Jobs I'[client_name] ), [Client Status] = "Growing" ) )
+		formatString: #,0
+		displayFolder: 09 Status
+		lineageTag: f0ac947f-021f-49f4-ace6-fa071a65b9c2
+
+	measure 'Declining Clients' = COUNTROWS ( FILTER ( ALL ( 'Jobs I'[client_name] ), [Client Status] = "Declining" ) )
+		formatString: #,0
+		displayFolder: 09 Status
+		lineageTag: 436cd66a-c2cf-4eb4-b98c-c27a16db6685
+
+	measure 'Stable Clients' = COUNTROWS ( FILTER ( ALL ( 'Jobs I'[client_name] ), [Client Status] = "Stable" ) )
+		formatString: #,0
+		displayFolder: 09 Status
+		lineageTag: 5a1fa183-ad14-45a1-8df5-4c2e3ce25fab
+
+	measure 'Stale Clients' = COUNTROWS ( FILTER ( ALL ( 'Jobs I'[client_name] ), [Client Status] = "Stale" ) )
+		formatString: #,0
+		displayFolder: 09 Status
+		lineageTag: 714a0117-b2a9-485f-965d-5f975dc18fe1
+
+	measure 'Dropped Clients' = COUNTROWS ( FILTER ( ALL ( 'Jobs I'[client_name] ), [Client Status] = "Dropped" ) )
+		formatString: #,0
+		displayFolder: 09 Status
+		lineageTag: 6d7f25cf-7829-47b3-8646-b08c2d68a3af
+
+	measure 'New Clients' = COUNTROWS ( FILTER ( ALL ( 'Jobs I'[client_name] ), [Client Status] = "New" ) )
+		formatString: #,0
+		displayFolder: 09 Status
+		lineageTag: 11eaf220-ae8c-4d6e-b7cb-199e5b9e38ae
+
+	measure 'Cumulative Revenue Share % (All)' = VAR CurrRev = [TotalRevenue] VAR Denom = CALCULATE ( [TotalRevenue], ALL ( 'Jobs I'[client_name] ) ) VAR CumRev = CALCULATE ( [TotalRevenue], FILTER ( ALL ( 'Jobs I'[client_name] ), [TotalRevenue] >= CurrRev ) ) RETURN DIVIDE ( CumRev, Denom )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 04 Share
+		lineageTag: ddf55821-4b5c-4d62-b3a5-fc6896650d1c
+
+	measure 'Top Gainer Value' = MAXX ( TOPN ( 1, ALL ( 'Jobs I'[client_name] ), [Selected Difference], DESC ), [Selected Difference] )
+		formatString: \$#,0
+		displayFolder: 10 Movers
+		lineageTag: 1410ff92-211b-4286-8012-259443b1688b
+
+	measure 'Top Gainer Name' = MAXX ( TOPN ( 1, ALL ( 'Jobs I'[client_name] ), [Selected Difference], DESC ), 'Jobs I'[client_name] )
+		displayFolder: 10 Movers
+		lineageTag: f80600e1-ca96-4816-82b8-dcb0ac170e39
+
+	measure 'Top Decliner Value' = MINX ( TOPN ( 1, ALL ( 'Jobs I'[client_name] ), [Selected Difference], ASC ), [Selected Difference] )
+		formatString: \$#,0
+		displayFolder: 10 Movers
+		lineageTag: c76580a7-885c-4367-8dee-356b06840b4f
+
+	measure 'Top Decliner Name' = MAXX ( TOPN ( 1, ALL ( 'Jobs I'[client_name] ), [Selected Difference], ASC ), 'Jobs I'[client_name] )
+		displayFolder: 10 Movers
+		lineageTag: e36280b8-e2bd-4256-9618-0ac6d45163d9
+
+	measure 'Top Gainer Label' = [Top Gainer Name] & " (" & FORMAT ( [Top Gainer Value], "$#,0;($#,0)" ) & ")"
+		displayFolder: 10 Movers
+		lineageTag: 08ee82d8-60a0-4dba-907f-493fbc657b5c
+
+	measure 'Top Decliner Label' = [Top Decliner Name] & " (" & FORMAT ( [Top Decliner Value], "$#,0;($#,0)" ) & ")"
+		displayFolder: 10 Movers
+		lineageTag: 27034c92-eb0e-4e2b-8577-dedf22c5038a
+
+	measure 'Trend Revenue' = VAR SelYear = MAX ( 'DateTable'[Year] ) VAR y = SELECTEDVALUE ( 'TrendCal'[Year] ) VAR m = SELECTEDVALUE ( 'TrendCal'[Month Number] ) RETURN IF ( y >= SelYear - 2 && y <= SelYear, CALCULATE ( [TotalRevenue], REMOVEFILTERS ( 'DateTable' ), REMOVEFILTERS ( 'LocalDateTable_7705dc45-5a53-4e5b-88d9-47a26f4584c3' ), 'DateTable'[Year] = y, 'DateTable'[Month Number] = m ) )
+		formatString: \$#,0
+		displayFolder: 11 Tooltip
+		lineageTag: 7d1fa439-cf8d-48d9-988c-851e4e7f2f76
+
+	measure 'Pareto Target 80%' = 0.8
+		displayFolder: 04 Share
+		lineageTag: cf2cbf4c-2b8f-4595-a23d-e0d8ef7c7682
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Growth Status Selected' = VAR b = [Selected Basis] VAR Cur = IF ( b = "YTD", [Revenue YTD], [TotalRevenue] ) VAR Prior = SWITCH ( b, "MoM", [PreviousMonthRevenue], "YoY", [PreviousYearRevenue], "YTD", [Revenue YTD PY], [PreviousYearRevenue] ) RETURN SWITCH ( TRUE ( ), ( Prior = 0 || ISBLANK ( Prior ) ) && Cur > 0, "New", ( Cur = 0 || ISBLANK ( Cur ) ) && Prior > 0, "Lost", Cur > Prior * 1.05, "Growing", Cur < Prior * 0.95, "Declining", "Stable" )
+		displayFolder: 05 Growth
+		lineageTag: 48c6addf-d0de-4278-8ad5-392a6e4464d5
+
+	measure 'Growth Color Selected' = SWITCH ( [Growth Status Selected], "Growing", "#3A7D44", "New", "#1A5C35", "Declining", "#CD4040", "Lost", "#A83030", "#5A5A5A" )
+		displayFolder: 05 Growth
+		lineageTag: bb77b22d-ef9f-487b-8ab2-43aeaa7301d3
+
+	measure 'Growth Status Matrix' = VAR Cur = [TotalRevenue] VAR AtMonthOrDeeper = ISINSCOPE ( 'Jobs I'[client_name] ) || ISINSCOPE ( 'Jobs I'[account] ) || ISINSCOPE ( 'LocalDateTable_7705dc45-5a53-4e5b-88d9-47a26f4584c3'[Month] ) VAR Prior = IF ( AtMonthOrDeeper, [PreviousMonthRevenue], [PreviousYearRevenue] ) RETURN SWITCH ( TRUE ( ), ( Prior = 0 || ISBLANK ( Prior ) ) && Cur > 0, "New", ( Cur = 0 || ISBLANK ( Cur ) ) && Prior > 0, "Lost", Cur > Prior * 1.05, "Growing", Cur < Prior * 0.95, "Declining", "Stable" )
+		displayFolder: 05 Growth
+		lineageTag: da9d003c-dee3-43c7-ad4e-33f716fb969e
+
+	measure 'Growth Color Matrix' = SWITCH ( [Growth Status Matrix], "Growing", "#3A7D44", "New", "#1A5C35", "Declining", "#CD4040", "Lost", "#A83030", "#5A5A5A" )
+		displayFolder: 05 Growth
+		lineageTag: f7d09da2-76c3-49de-9025-67c410f3d300
+
+	measure 'Growth Status YTD' =
+			
+			VAR Cur = [Revenue YTD]
+			VAR Prior = [Revenue YTD PY]
+			RETURN
+			SWITCH (
+			    TRUE (),
+			    ( Prior = 0 || ISBLANK ( Prior ) ) && Cur > 0, "New",
+			    Cur = 0 && Prior > 0, "Lost",
+			    Cur > Prior * 1.05, "Growing",
+			    Cur < Prior * 0.95, "Declining",
+			    "Stable"
+			)
+		displayFolder: 05 Growth
+		lineageTag: b67b5c36-2294-47ac-8eec-6daa1fc9eeee
+
+	measure 'Growth Color YTD' = ```
+			-- compares the YTD pair
+			VAR Cur = [Revenue YTD]
+			VAR Prior = [Revenue YTD PY]
+			RETURN SWITCH ( TRUE (),
+			    ( Prior = 0 || ISBLANK ( Prior ) ) && Cur > 0, "#1A5C35",
+			    ( Cur = 0 || ISBLANK ( Cur ) ) && Prior > 0, "#A83030",
+			    Cur > Prior * 1.05, "#3A7D44",
+			    Cur < Prior * 0.95, "#CD4040", "#5A5A5A" )
+			
+			```
+		displayFolder: 05 Growth
+		lineageTag: 395742a9-0b09-49f8-98e8-7aa0ee037631
+
+	measure 'Rev Caption' = ```
+			FORMAT ( DATE ( MAX ( 'DateTable'[Year] ), MAX ( 'DateTable'[Month Number] ), 1 ), "MMMM YYYY" ) & " · Actual"
+			
+			```
+		displayFolder: 07 UI
+		lineageTag: b846b3e4-bb64-46a1-ba10-05c320dfea52
+
+	measure 'MoM Display' = IF ( [MoM%] >= 0, "▲ ", "▼ " ) & FORMAT ( [MoM%], "0.0%" )
+		displayFolder: 07 UI
+		lineageTag: 0029bcb4-d6bd-4b79-a4a8-94c1c7939f7a
+
+	measure 'MoM Color' = IF ( [MoM%] >= 0, "#3D8B5C", "#CD4040" )
+		displayFolder: 07 UI
+		lineageTag: 0bc9a122-861b-47cd-b7d7-4dbd04a3f704
+
+	measure 'MoM Caption' = "vs. " & FORMAT ( EDATE ( DATE ( MAX ( 'DateTable'[Year] ), MAX ( 'DateTable'[Month Number] ), 1 ), -1 ), "MMMM YYYY" )
+		displayFolder: 07 UI
+		lineageTag: 5776d9ce-930d-4523-b464-5dce4cb53e39
+
+	measure 'YTD Caption' = "vs. same period " & ( MAX ( 'DateTable'[Year] ) - 1 )
+		displayFolder: 07 UI
+		lineageTag: f468a4cf-fad7-44aa-acae-3450fdc43ff8
+
+	measure 'YTD Display' = IF ( [Revenue YTD YoY%] >= 0, "▲ ", "▼ " ) & FORMAT ( [Revenue YTD YoY%], "0.0%" )
+		displayFolder: 07 UI
+		lineageTag: da5a08ae-7da8-4b8d-b795-68d9d409e5a3
+
+	measure 'YTD% Color' = IF ( [Revenue YTD YoY%] >= 0, "#3D8B5C", "#CD4040" )
+		displayFolder: 07 UI
+		lineageTag: 8c3113b6-f9b6-422d-8eb3-610185a79847
+
+	measure 'Growth Color MoM' = ```
+			
+			VAR Cur = [TotalRevenue]
+			VAR Prior = [PreviousMonthRevenue]
+			RETURN SWITCH ( TRUE (),
+			    ( Prior = 0 || ISBLANK ( Prior ) ) && Cur > 0, "#1A5C35",
+			    ( Cur = 0 || ISBLANK ( Cur ) ) && Prior > 0, "#A83030",
+			    Cur > Prior * 1.05, "#3A7D44",
+			    Cur < Prior * 0.95, "#CD4040", "#5A5A5A" )
+			
+			
+			```
+		displayFolder: 05 Growth
+		lineageTag: 6ca1c497-b3bc-460a-81b5-600385176b02
+
+	measure 'Growth Color YoY' = ```
+			-- same, but Prior = [PreviousYearRevenue]
+			VAR Cur = [TotalRevenue]
+			VAR Prior = [PreviousYearRevenue]
+			RETURN SWITCH ( TRUE (),
+			    ( Prior = 0 || ISBLANK ( Prior ) ) && Cur > 0, "#1A5C35",
+			    ( Cur = 0 || ISBLANK ( Cur ) ) && Prior > 0, "#A83030",
+			    Cur > Prior * 1.05, "#3A7D44",
+			    Cur < Prior * 0.95, "#CD4040", "#5A5A5A" )
+			
+			```
+		displayFolder: 05 Growth
+		lineageTag: c5dd2458-e7a2-4983-8ef2-c162a6c3b72c
+
+	measure 'YoY Display' = IF ( [TotalRevenue YoY%] >= 0, "▲ ", "▼ " ) & FORMAT ( [TotalRevenue YoY%], "0.0%" )
+		displayFolder: 07 UI
+		lineageTag: 05fd8589-c339-416a-a99d-4457dde72b99
+
+	measure 'Client Name Label' = SELECTEDVALUE ( 'Jobs I'[client_name] )
+		displayFolder: 07 UI
+		lineageTag: e84654e6-ac25-431b-a232-8fb1bfeab039
+
+	measure 'Revenue · This Month' = [TotalRevenue]
+		formatString: \$#,0
+		displayFolder: 07 UI
+		lineageTag: 8d1e2163-37cb-4929-892a-0ef81764c18e
+
+	measure 'Revenue · vs Same Month LY' = [TotalRevenue]
+		formatString: \$#,0
+		displayFolder: 07 UI
+		lineageTag: 131e0be3-56e3-46ae-95e9-b6ce8d3f8cb5
+
+	measure 'YoY% Color' = IF ( [TotalRevenue YoY%] >= 0, "#3D8B5C", "#CD4040" )
+		displayFolder: 07 UI
+		lineageTag: b97130f3-f7ac-452f-8cb0-7876f93c3111
+
+	measure 'YoY Caption' = "vs. " & FORMAT ( EDATE ( DATE ( MAX ( 'DateTable'[Year] ), MAX ( 'DateTable'[Month Number] ), 1 ), -12 ), "MMMM YYYY" )
+		displayFolder: 07 UI
+		lineageTag: e0c3c636-67e1-46b5-a386-d2c8fffd73fb
+
+	measure 'KPI Cur Title' = "Revenue · " & FORMAT ( DATE ( MAX ( 'DateTable'[Year] ), MAX ( 'DateTable'[Month Number] ), 1 ), "MMMM YYYY" )
+		displayFolder: 07 UI
+		lineageTag: 5b479c28-ca99-4766-b09a-01d314390ad1
+
+	measure 'KPI YoY Title' = "vs. Same Month " & ( MAX ( 'DateTable'[Year] ) - 1 )
+		displayFolder: 07 UI
+		lineageTag: cfc826a5-6aed-4824-bea4-6fa660664a0e
+
+	measure 'KPI YTD Title' = "YTD " & MAX ( 'DateTable'[Year] ) & " vs " & ( MAX ( 'DateTable'[Year] ) - 1 )
+		displayFolder: 07 UI
+		lineageTag: fe4d763d-82b5-4a02-89f0-94ec77690a9a
+
+	measure 'MoM Detail' =
+			VAR v = [Monthly Difference]
+			VAR a = ABS ( v )
+			VAR num = SWITCH ( TRUE (), a >= 1000000, FORMAT ( a / 1000000, "0.0" ) & "M", a >= 1000, FORMAT ( a / 1000, "0.0" ) & "K", FORMAT ( a, "0" ) )
+			VAR pct = FORMAT ( DIVIDE ( v, [PreviousMonthRevenue] ), "+0.0%;-0.0%" )
+			RETURN IF ( v >= 0, "▲ +$", "▼ -$" ) & num & IF ( pct = "", "", " · " & pct )
+		displayFolder: 07 UI
+		lineageTag: d1977cb8-ee6b-4661-964d-2c38dc2b1d14
+
+	measure 'YoY Detail' =
+			VAR v = [YearDifference]
+			VAR a = ABS ( v )
+			VAR num = SWITCH ( TRUE (), a >= 1000000, FORMAT ( a / 1000000, "0.0" ) & "M", a >= 1000, FORMAT ( a / 1000, "0.0" ) & "K", FORMAT ( a, "0" ) )
+			VAR pct = FORMAT ( DIVIDE ( v, [PreviousYearRevenue] ), "+0.0%;-0.0%" )
+			RETURN IF ( v >= 0, "▲ +$", "▼ -$" ) & num & IF ( pct = "", "", " · " & pct )
+		displayFolder: 07 UI
+		lineageTag: 1ef6832e-77c8-4297-80f9-d01afe307899
+
+	measure 'YTD Detail' =
+			VAR v = [Revenue YTD Difference]
+			VAR a = ABS ( v )
+			VAR num = SWITCH ( TRUE (), a >= 1000000, FORMAT ( a / 1000000, "0.0" ) & "M", a >= 1000, FORMAT ( a / 1000, "0.0" ) & "K", FORMAT ( a, "0" ) )
+			VAR pct = FORMAT ( DIVIDE ( v, [Revenue YTD PY] ), "+0.0%;-0.0%" )
+			RETURN IF ( v >= 0, "▲ +$", "▼ -$" ) & num & IF ( pct = "", "", " · " & pct )
+		displayFolder: 07 UI
+		lineageTag: b82f92ad-cd43-4e39-b12a-06f4de40c1ad
+
+	measure 'MoM Detail BG' = IF ( [Monthly Difference] >= 0, "#E8F1EA", "#F8E9E9" )
+		displayFolder: 07 UI
+		lineageTag: f2a56c96-676f-4ef9-acc9-a4b7754446ed
+
+	measure 'YoY Detail BG' = IF ( [YearDifference] >= 0, "#E8F1EA", "#F8E9E9" )
+		displayFolder: 07 UI
+		lineageTag: ee0207dd-5bc5-4bca-b3b3-54df629568d7
+
+	measure 'YTD Detail BG' = IF ( [Revenue YTD Difference] >= 0, "#E8F1EA", "#F8E9E9" )
+		displayFolder: 07 UI
+		lineageTag: 41ab3e8b-ad02-48c5-b4d7-db145fd06a32
+
+	measure 'Trend Revenue (History)' = VAR SelYear = CALCULATE ( MAX ( 'DateTable'[Year] ), REMOVEFILTERS ( 'Jobs I' ) ) VAR y = SELECTEDVALUE ( 'TrendCal'[Year] ) VAR m = SELECTEDVALUE ( 'TrendCal'[Month Number] ) RETURN IF ( y >= SelYear - 2 && y <= SelYear, CALCULATE ( [TotalRevenue], REMOVEFILTERS ( 'DateTable' ), REMOVEFILTERS ( 'LocalDateTable_7705dc45-5a53-4e5b-88d9-47a26f4584c3' ), 'DateTable'[Year] = y, 'DateTable'[Month Number] = m ) )
+		formatString: \$#,0
+		displayFolder: 11 Tooltip
+		lineageTag: 488a4654-1ffa-4139-a980-9882e046856f
+
+	measure 'Revenue (Matrix)' = ```
+			
+			IF (
+			    NOT ISBLANK ( [Selected Difference] ) || NOT ISBLANK ( [TotalRevenue] ),
+			    [TotalRevenue] + 0
+			)
+			
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 77256bcf-2b2b-4cb4-80b7-7b3832307ee2
+
+	measure 'Selected Revenue' =
+			
+			SWITCH (
+			    [Selected Basis],
+			    "MoM", [TotalRevenue],
+			    "YoY", [TotalRevenue],
+			    "YTD", [Revenue YTD], -- replace with [YTD Revenue] if meant to show the base YTD measure
+			    [TotalRevenue] -- Default fallback
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 06 Trend
+		lineageTag: 08011f71-7b9a-48c7-9fb5-36af1eb07a19
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-x-bi-SDL"}
+
+	measure 'Selected Revenue Previous' =
+			
+			SWITCH (
+			    [Selected Basis],
+			    "MoM", [PreviousMonthRevenue],
+			    "YoY", [PreviousYearRevenue],
+			    "YTD", [Revenue YTD PY],
+			    [PreviousYearRevenue] -- Default fallback
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 06 Trend
+		lineageTag: 16b25379-77bd-456b-b25e-f30036d7918f
+
+	column Column
+		formatString: 0
+		lineageTag: 8317bae7-fc77-4ce1-85f0-8c451a04d92a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Measuress = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 3e9678742f83464b822c2c0f73deb495
+

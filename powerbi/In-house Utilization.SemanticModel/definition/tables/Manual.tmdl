@@ -1,0 +1,145 @@
+table Manual
+	lineageTag: 9aa65b53-3eae-4709-bffa-eede98e521f8
+
+	column vendor
+		dataType: string
+		lineageTag: 66a1c741-3dfe-4426-a6d1-d58d415f377d
+		summarizeBy: none
+		sourceColumn: vendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Job Type'
+		dataType: string
+		lineageTag: ac9dd7dd-88fc-4a23-a5be-716f72bc3455
+		summarizeBy: none
+		sourceColumn: Job Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Volume
+		dataType: double
+		lineageTag: 5b203ff3-ce63-4b99-92c4-a433ae10e7b8
+		summarizeBy: sum
+		sourceColumn: Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f4c99860-b0c5-410d-b8c7-d21650a1d1f6
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 7546a014-4815-4417-8240-a545a01ce6c4
+			defaultHierarchy: LocalDateTable_94161507-0815-41be-bfab-c5590881f22e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ID
+		dataType: string
+		lineageTag: de6f18f5-216e-44a4-b940-4b1ef5b92c20
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Task Type'
+		dataType: string
+		lineageTag: 37d2c54f-3587-4f9f-86fb-bab310cf1b9a
+		summarizeBy: none
+		sourceColumn: Task Type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Manual = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataRoot & "\data\utilization\New Status1.csv"),[Delimiter=",", Columns=5, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"vendor", type text}, {"Job Type", type text}, {"Volume", type number}, {"Calculation unit", type text}, {"Date", type datetime}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","Hour","hour",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","Word (wwc)","word",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","hou","hour",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","HOUR","hour",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value4" = Table.ReplaceValue(#"Replaced Value3","hourS","hour",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value5" = Table.ReplaceValue(#"Replaced Value4","words","word",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value6" = Table.ReplaceValue(#"Replaced Value5","hourrs","hour",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value7" = Table.ReplaceValue(#"Replaced Value6","HOurs","hour",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value8" = Table.ReplaceValue(#"Replaced Value7","MIN","min",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value9" = Table.ReplaceValue(#"Replaced Value8","worc","word",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value10" = Table.ReplaceValue(#"Replaced Value9","wo","word",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value11" = Table.ReplaceValue(#"Replaced Value10","wordrd","word",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value12" = Table.ReplaceValue(#"Replaced Value11","h","hour",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value13" = Table.ReplaceValue(#"Replaced Value12","hourour","hour",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Replaced Value14" = Table.ReplaceValue(#"Replaced Value13","hourr","hour",Replacer.ReplaceText,{"Calculation unit"}),
+				    #"Added Custom" = Table.AddColumn(#"Replaced Value14", "Volume 1", each [Volume], type number),
+				    #"Added IsHour" = Table.AddColumn(#"Added Custom", "IsHour", each [Calculation unit] = "hour", type logical),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Added IsHour",{"vendor", "Job Type", "Volume 1", "Volume", "Calculation unit", "Date"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Reordered Columns",{"Volume"}),
+				    #"Inserted Year" = Table.AddColumn(#"Removed Columns", "Year", each Date.Year([Date]), Int64.Type),
+				    #"Inserted Month" = Table.AddColumn(#"Inserted Year", "Month", each Date.Month([Date]), Int64.Type),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Inserted Month", {"Date"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Errors", each ([Calculation unit] = "hour" or [Calculation unit] = "word")),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Filtered Rows",{"Calculation unit"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns1",{{"Volume 1", "Volume"}}),
+				    #"Inserted Quarter" = Table.AddColumn(#"Renamed Columns", "Quarter", each Date.QuarterOfYear([Date]), Int64.Type),
+				    #"Added Prefix" = Table.TransformColumns(#"Inserted Quarter", {{"Quarter", each "Q" & Text.From(_, "en-US"), type text}}),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Added Prefix", "Merged", each Text.Combine({[Quarter], Text.From([Year], "en-US")}, "-"), type text),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Inserted Merged Column",{{"Merged", "Quarter-Year"}}),
+				    #"Merged Columns" = Table.CombineColumns(Table.TransformColumnTypes(#"Renamed Columns1", {{"Month", type text}, {"Year", type text}}, "en-US"),{"Month", "Year"},Combiner.CombineTextByDelimiter("/", QuoteStyle.None),"Merged"),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Merged Columns",{{"Merged", type date}}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Changed Type1",{{"Merged", "Date1"}}),
+				    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Renamed Columns2", {"Date1"}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Removed Errors1",{"Date"}),
+				    #"Renamed Columns3" = Table.RenameColumns(#"Removed Columns2",{{"Date1", "Date"}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Renamed Columns3",{{"Volume", type number}}),
+				    #"Removed Columns3" = Table.RemoveColumns(#"Changed Type2",{"Quarter", "Quarter-Year"}),
+				    #"Added Custom1" = Table.AddColumn(#"Removed Columns3", "ID", each "Status"),
+				    #"Added Task Type" = Table.AddColumn(#"Added Custom1", "Task Type", each
+				        if [Job Type] = null then null else
+				        let jt = Text.Trim(Text.Lower(
+				            if Text.EndsWith([Job Type], "_external", Comparer.OrdinalIgnoreCase)
+				            then Text.Start([Job Type], Text.Length([Job Type]) - Text.Length("_external"))
+				            else [Job Type]
+				        )) in
+				        if List.Contains({"shoot", "shooting"}, jt) then "Shooting"
+				        else if List.Contains({"rev", "revisio", "revision"}, jt) then "Revision"
+				        else if List.Contains({"mtp", "mtpe"}, jt) then "MTPE"
+				        else if List.Contains({"qa", "visual qa", "proof", "pro", "proofreading", "proofreading (arabic)"}, jt) then "QA"
+				        else if List.Contains({"trans", "translation"}, jt) then "Translation"
+				        else null, type text),
+				    #"Converted Hours by Capacity" = Table.AddColumn(#"Added Task Type", "VolumeConv", each
+				        if [IsHour] then
+				            [Volume] *
+				            (let
+				                isNew = [Date] <> null and [Date] >= #date(2026, 9, 1),
+				                cap =
+				                    if [Task Type] = "Shooting" then 1500
+				                    else if [Task Type] = "QA" then 8000
+				                    else if [Task Type] = "Revision" then (if isNew then 4000 else 3000)
+				                    else if [Task Type] = "MTPE" then (if isNew then 4000 else 3000)
+				                    else if [Task Type] = "Translation" then (if isNew then 3000 else 2000)
+				                    else 0
+				            in
+				                if cap = 0 then 218.75 else cap / 8)
+				        else [Volume], type number),
+				    #"Removed Columns4" = Table.RemoveColumns(#"Converted Hours by Capacity",{"Volume"}),
+				    #"Renamed Columns4" = Table.RenameColumns(#"Removed Columns4",{{"VolumeConv", "Volume"}}),
+				    #"Removed Columns5" = Table.RemoveColumns(#"Renamed Columns4",{"IsHour"}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Removed Columns5", each ([vendor] <> "Ulf Kowalski" and [vendor] <> "Amina Lindqvist" and [vendor] <> "Ulf Sato" and [vendor] <> "Oren Duarte"))
+				in
+				    #"Filtered Rows1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

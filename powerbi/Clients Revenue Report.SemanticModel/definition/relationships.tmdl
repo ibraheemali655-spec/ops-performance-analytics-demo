@@ -1,0 +1,9 @@
+relationship df6d6cc5-df24-44dc-999b-7963948e3c48
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DateTable.Date
+	toColumn: LocalDateTable_7705dc45-5a53-4e5b-88d9-47a26f4584c3.Date
+
+relationship 6c2956bb-3f3b-7f65-5b0b-6768784e7da5
+	fromColumn: 'Jobs I'.deadline
+	toColumn: DateTable.Date
+

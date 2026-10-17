@@ -1,0 +1,45 @@
+expression DataRoot = "C:\ops-performance-analytics-demo\out\demo" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 67417e89-fc58-57db-aa4e-bb88b9418752
+
+	annotation PBI_ResultType = Text
+
+expression 'Sample File (3)' =
+		let
+		    Source = Folder.Files(DataRoot & "\data\utilization\Linguists"),
+		    Navigation1 = Source{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 1877d444-7b07-4ee4-a4c1-dd4350e44a8b
+	queryGroup: 'Transform File from Linguists\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression Parameter3 = #"Sample File (3)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (3)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: ce813102-f7ad-4c51-a1a2-d4452aba0f99
+	queryGroup: 'Transform File from Linguists\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (3)' =
+		let
+		    Source = Csv.Document(Parameter3,[Delimiter=",", Columns=16, Encoding=65001, QuoteStyle=QuoteStyle.None])
+		in
+		    Source
+	lineageTag: 30717851-8f5d-4b94-9e0c-45868f317b79
+	queryGroup: 'Transform File from Linguists'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (3)' =
+		let
+		    Source = (Parameter3 as binary) => let
+		    Source = Csv.Document(Parameter3,[Delimiter=",", Columns=16, Encoding=65001, QuoteStyle=QuoteStyle.None])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (3)""}" ]
+	lineageTag: a7d33e50-7f8d-4255-acd9-65844d0397e3
+	queryGroup: 'Transform File from Linguists\Helper Queries'
+
+	annotation PBI_ResultType = Function

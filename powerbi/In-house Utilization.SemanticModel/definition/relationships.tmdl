@@ -1,0 +1,25 @@
+relationship 7546a014-4815-4417-8240-a545a01ce6c4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Manual.Date
+	toColumn: LocalDateTable_94161507-0815-41be-bfab-c5590881f22e.Date
+
+relationship 9819a510-a068-4b91-a394-971876dc2f2e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Combined.Date
+	toColumn: LocalDateTable_d248d199-97e6-4b2d-b7c6-4783be7ac7a4.Date
+
+relationship 90585b83-763a-4f35-8460-c62360c912dd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Team_Tracker.Date
+	toColumn: LocalDateTable_52cb9cba-b672-4145-bfaa-cb57afda1477.Date
+
+relationship 8aaffc20-cfce-42ba-926c-1ce0bd113da3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Linguists.Date
+	toColumn: LocalDateTable_a4db1e62-120f-4505-96af-2736c698c8eb.Date
+
+relationship 393ad9ff-2a73-48a7-9e0c-34d20b9e8d54
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Appended.Date
+	toColumn: LocalDateTable_79185cb5-f19c-4cdc-a33f-7de2b2ad1578.Date
+

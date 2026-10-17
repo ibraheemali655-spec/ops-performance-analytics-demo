@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "e621510a6b92f3247be3",
+  "displayName": "Status& XTRF",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "dba49c4bbba2609b18ee",
+      "target": "0ebb31932e079130996a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "1eb7e5a50a4c4d5c7774",
+      "target": "cbf5e81d9735cd4c3d68",
+      "type": "DataFilter"
+    },
+    {
+      "source": "eb2a7f88a5bdb085abda",
+      "target": "cbf5e81d9735cd4c3d68",
+      "type": "DataFilter"
+    },
+    {
+      "source": "cbf5e81d9735cd4c3d68",
+      "target": "eb2a7f88a5bdb085abda",
+      "type": "DataFilter"
+    },
+    {
+      "source": "edd4d4e09d9a6db6433e",
+      "target": "0ebb31932e079130996a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "edd4d4e09d9a6db6433e",
+      "target": "cbf5e81d9735cd4c3d68",
+      "type": "NoFilter"
+    }
+  ]
+}

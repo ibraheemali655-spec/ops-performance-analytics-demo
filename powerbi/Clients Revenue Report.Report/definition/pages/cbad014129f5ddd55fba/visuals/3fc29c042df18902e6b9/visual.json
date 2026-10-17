@@ -1,0 +1,231 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "3fc29c042df18902e6b9",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "height": 240,
+    "width": 320,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "deneb7E15AEF80B9E4D4F8E12924291ECE89A",
+    "query": {
+      "queryState": {
+        "dataset": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "TrendCal"
+                    }
+                  },
+                  "Property": "Year"
+                }
+              },
+              "queryRef": "TrendCal.Year",
+              "nativeQueryRef": "Year"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "TrendCal"
+                    }
+                  },
+                  "Property": "Month Number"
+                }
+              },
+              "queryRef": "TrendCal.Month Number",
+              "nativeQueryRef": "Month Number"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "TrendCal"
+                    }
+                  },
+                  "Property": "Month"
+                }
+              },
+              "queryRef": "TrendCal.Month",
+              "nativeQueryRef": "Month"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measuress"
+                    }
+                  },
+                  "Property": "Trend Revenue (History)"
+                }
+              },
+              "queryRef": "Measuress.Trend Revenue (History)",
+              "nativeQueryRef": "Trend Revenue (History)"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "vega": [
+        {
+          "properties": {
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'vegaLite'"
+                }
+              }
+            },
+            "jsonSpec": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"$schema\": \"https://vega.github.io/schema/vega-lite/v5.json\", \"data\": {\"name\": \"dataset\"}, \"width\": \"container\", \"height\": \"container\", \"transform\": [{\"calculate\": \"datum.Year * 12 + datum[\\\"Month Number\\\"]\", \"as\": \"ym\"}, {\"calculate\": \"datum[\\\"Trend Revenue (History)\\\"] == null ? 0 : datum[\\\"Trend Revenue (History)\\\"]\", \"as\": \"rev\"}, {\"joinaggregate\": [{\"op\": \"max\", \"field\": \"rev\", \"as\": \"peak\"}, {\"op\": \"sum\", \"field\": \"rev\", \"as\": \"sumRev\"}]}, {\"calculate\": \"datum.rev > 0 ? 1 : 0\", \"as\": \"act\"}, {\"joinaggregate\": [{\"op\": \"sum\", \"field\": \"act\", \"as\": \"nActive\"}]}, {\"calculate\": \"datum.nActive > 0 ? datum.sumRev / datum.nActive : 0\", \"as\": \"avg\"}, {\"window\": [{\"op\": \"first_value\", \"field\": \"Month\", \"as\": \"peakMonth\"}, {\"op\": \"first_value\", \"field\": \"Year\", \"as\": \"peakYear\"}], \"sort\": [{\"field\": \"rev\", \"order\": \"descending\"}], \"frame\": [null, null]}, {\"calculate\": \"datum.peak >= 1000000 ? \\\"$\\\" + (round(datum.peak/100000)/10) + \\\"M\\\" : (datum.peak >= 1000 ? \\\"$\\\" + round(datum.peak/1000) + \\\"K\\\" : \\\"$\\\" + round(datum.peak))\", \"as\": \"peakStr\"}, {\"calculate\": \"datum.avg >= 1000000 ? \\\"$\\\" + (round(datum.avg/100000)/10) + \\\"M\\\" : (datum.avg >= 1000 ? \\\"$\\\" + round(datum.avg/1000) + \\\"K\\\" : \\\"$\\\" + round(datum.avg))\", \"as\": \"avgStr\"}, {\"calculate\": \"\\\"Peak \\\" + datum.peakStr + \\\" (\\\" + substring(datum.peakMonth,0,3) + \\\" \\\" + (datum.peakYear % 100) + \\\")   Avg \\\" + datum.avgStr\", \"as\": \"statTop\"}, {\"calculate\": \"\\\"Span:  \\\" + datum.nActive + \\\" of 36 months active\\\"\", \"as\": \"statBot\"}, {\"window\": [{\"op\": \"row_number\", \"as\": \"rn\"}]}], \"layer\": [{\"mark\": {\"type\": \"area\", \"interpolate\": \"monotone\", \"opacity\": 0.1, \"color\": \"#3A7D44\"}, \"encoding\": {\"x\": {\"field\": \"ym\", \"type\": \"quantitative\", \"axis\": null}, \"y\": {\"field\": \"rev\", \"type\": \"quantitative\", \"scale\": {\"range\": [142, 42]}, \"axis\": null}}}, {\"mark\": {\"type\": \"line\", \"interpolate\": \"monotone\", \"color\": \"#3A7D44\", \"strokeWidth\": 2}, \"encoding\": {\"x\": {\"field\": \"ym\", \"type\": \"quantitative\", \"axis\": null}, \"y\": {\"field\": \"rev\", \"type\": \"quantitative\", \"scale\": {\"range\": [142, 42]}, \"axis\": null}}}, {\"transform\": [{\"filter\": \"datum.rev == datum.peak && datum.peak > 0\"}], \"mark\": {\"type\": \"point\", \"filled\": true, \"fill\": \"#F68E1E\", \"size\": 65, \"stroke\": \"#FFFFFF\", \"strokeWidth\": 1}, \"encoding\": {\"x\": {\"field\": \"ym\", \"type\": \"quantitative\"}, \"y\": {\"field\": \"rev\", \"type\": \"quantitative\", \"scale\": {\"range\": [142, 42]}}}}, {\"transform\": [{\"filter\": \"datum.rn == 1\"}], \"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"top\", \"fontSize\": 11, \"fontWeight\": 700, \"fill\": \"#1A1A1A\"}, \"encoding\": {\"x\": {\"value\": 8}, \"y\": {\"value\": 6}, \"text\": {\"value\": \"Revenue — last 3 years\"}}}, {\"transform\": [{\"filter\": \"datum.rn == 1\"}], \"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"top\", \"fontSize\": 10, \"fontWeight\": 700, \"fill\": \"#333333\"}, \"encoding\": {\"x\": {\"value\": 8}, \"y\": {\"value\": 170}, \"text\": {\"field\": \"statTop\"}}}, {\"transform\": [{\"filter\": \"datum.rn == 1\"}], \"mark\": {\"type\": \"text\", \"align\": \"left\", \"baseline\": \"top\", \"fontSize\": 10, \"fill\": \"#5A5A5A\"}, \"encoding\": {\"x\": {\"value\": 8}, \"y\": {\"value\": 190}, \"text\": {\"field\": \"statBot\"}}}]}'"
+                }
+              }
+            },
+            "jsonConfig": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{}'"
+                }
+              }
+            },
+            "enableTooltips": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "enableContextMenu": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "enableHighlight": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "enableSelection": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'6.4.1'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stateManagement": [
+        {
+          "properties": {
+            "viewportHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "230D"
+                }
+              }
+            },
+            "viewportWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "310D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "developer": [
+        {
+          "properties": {
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'1.9.1.0'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "editor": [
+        {
+          "properties": {
+            "backgroundPassThrough": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

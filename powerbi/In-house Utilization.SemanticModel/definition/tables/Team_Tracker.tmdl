@@ -1,0 +1,101 @@
+table Team_Tracker
+	lineageTag: 45b23794-dd75-4399-b9bc-f7bea1ac19cb
+
+	column vendor
+		dataType: string
+		lineageTag: c9e08f4c-cc32-44e1-97e7-8d7ffa344802
+		summarizeBy: none
+		sourceColumn: vendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Job Type'
+		dataType: string
+		lineageTag: 356c7ecf-f98e-485e-847e-4ab179421795
+		summarizeBy: none
+		sourceColumn: Job Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Volume
+		dataType: int64
+		formatString: 0
+		lineageTag: d47c3e51-2782-42ae-aaad-904b7ff918d5
+		summarizeBy: sum
+		sourceColumn: Volume
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: string
+		lineageTag: d042a0d0-26aa-4d7f-be8e-bee56afa8d31
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2eece9b0-a797-48e1-b299-513b4fcd44f2
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 90585b83-763a-4f35-8460-c62360c912dd
+			defaultHierarchy: LocalDateTable_52cb9cba-b672-4145-bfaa-cb57afda1477.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Task Type'
+		dataType: string
+		lineageTag: 0c3485a2-22b6-4503-ab36-59a1307de1bc
+		summarizeBy: none
+		sourceColumn: Task Type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Team_Tracker = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataRoot & "\data\utilization\Team_Tracker.csv"),[Delimiter=",", Columns=6, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"vendor", type text}, {"Job Type", type text}, {"Volume", Int64.Type}, {"Calculation unit", type text}, {"Date", type text}, {"Date M", type text}}),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Changed Type", "Date M", Splitter.SplitTextByDelimiter(" ", QuoteStyle.Csv), {"Date M.1", "Date M.2"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Date M.1", type text}, {"Date M.2", type text}}),
+				    #"Split Column by Delimiter2" = Table.SplitColumn(#"Changed Type1", "Date M.1", Splitter.SplitTextByDelimiter("/", QuoteStyle.Csv), {"Date M.1.1", "Date M.1.2", "Date M.1.3"}),
+				    #"Merged Columns" = Table.CombineColumns(#"Split Column by Delimiter2",{"Date M.1.2", "Date M.1.1", "Date M.1.3"},Combiner.CombineTextByDelimiter("/", QuoteStyle.None),"Merged"),
+				    #"Replaced Value" = Table.ReplaceValue(#"Merged Columns","//","",Replacer.ReplaceText,{"Merged"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Replaced Value",{{"Merged", "Date M"}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Renamed Columns", "Date F", each if [Date M] = "" then [Date] else [Date M]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column",{"Date", "Date M", "Date M.2"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns",{{"Date F", "Date"}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Renamed Columns1",{{"Date", type date}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type2", "ID", each "Team"),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Added Custom",{"Calculation unit"}),
+				    #"Split Column by Delimiter1" = Table.SplitColumn(Table.TransformColumnTypes(#"Removed Columns1", {{"Date", type text}}, "en-IL"), "Date", Splitter.SplitTextByDelimiter("/", QuoteStyle.Csv), {"Date.1", "Date.2", "Date.3"}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Split Column by Delimiter1",{{"Date.1", Int64.Type}, {"Date.2", Int64.Type}, {"Date.3", Int64.Type}}),
+				    #"Merged Columns1" = Table.CombineColumns(Table.TransformColumnTypes(#"Changed Type3", {{"Date.2", type text}, {"Date.3", type text}}, "en-IL"),{"Date.2", "Date.3"},Combiner.CombineTextByDelimiter("/", QuoteStyle.None),"Merged"),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Merged Columns1",{"Date.1"}),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Removed Columns2",{{"Merged", type date}}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Changed Type4",{{"Merged", "Date"}}),
+				    #"Added Task Type" = Table.AddColumn(#"Renamed Columns2", "Task Type", each
+				        if [Job Type] = null then null else
+				        let jt = Text.Trim(Text.Lower([Job Type])) in
+				        if List.Contains({"shoot", "shooting"}, jt) then "Shooting"
+				        else if List.Contains({"rev", "revisio", "revision"}, jt) then "Revision"
+				        else if List.Contains({"mtp", "mtpe"}, jt) then "MTPE"
+				        else if List.Contains({"qa", "visual qa", "proof", "pro", "proofreading", "proofreading (arabic)"}, jt) then "QA"
+				        else if List.Contains({"trans", "translation"}, jt) then "Translation"
+				        else null, type text)
+				in
+				    #"Added Task Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,204 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "dba49c4bbba2609b18ee",
+  "position": {
+    "x": 0,
+    "y": 472.39515377446412,
+    "z": 2000,
+    "height": 247.85408068166689,
+    "width": 639.26720809479434,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appended"
+                    }
+                  },
+                  "Property": "Team"
+                }
+              },
+              "queryRef": "Appended.Team",
+              "nativeQueryRef": "Team",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appended"
+                    }
+                  },
+                  "Property": "vendor"
+                }
+              },
+              "queryRef": "Appended.vendor",
+              "nativeQueryRef": "vendor",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SX_Measures"
+                    }
+                  },
+                  "Property": "Utilization_SX %"
+                }
+              },
+              "queryRef": "SX_Measures.Utilization_SX %",
+              "nativeQueryRef": "Utilization %",
+              "displayName": "Utilization %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SX_Measures"
+                    }
+                  },
+                  "Property": "Total Volume_SX"
+                }
+              },
+              "queryRef": "SX_Measures.Total Volume_SX",
+              "nativeQueryRef": "Total Volume",
+              "displayName": "Total Volume"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SX_Measures"
+                    }
+                  },
+                  "Property": "Avg Monthly Volume_SX"
+                }
+              },
+              "queryRef": "SX_Measures.Avg Monthly Volume_SX",
+              "nativeQueryRef": "Avg Monthly Volume",
+              "displayName": "Avg Monthly Volume"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SX_Measures"
+                    }
+                  },
+                  "Property": "Vendor Capacity_SX"
+                }
+              },
+              "queryRef": "SX_Measures.Vendor Capacity_SX",
+              "nativeQueryRef": "Vendor Capacity",
+              "displayName": "Vendor Capacity"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "SX_Measures"
+                  }
+                },
+                "Property": "Utilization_SX %"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "Appended.Team"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Appended"
+                    }
+                  },
+                  "Property": "Team"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "Appended.vendor"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {
+          "children": [
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'General'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'Team B'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'Team A'"
+                  }
+                }
+              ],
+              "isToggled": true
+            }
+          ]
+        }
+      }
+    ],
+    "drillFilterOtherVisuals": true
+  }
+}

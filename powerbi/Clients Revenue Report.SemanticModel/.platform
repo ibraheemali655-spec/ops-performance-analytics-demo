@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Clients Revenue Report- August 26"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c332f38b-c0d9-4f28-82d0-546afab89f07"
+  }
+}

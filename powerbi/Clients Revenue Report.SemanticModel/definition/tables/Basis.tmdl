@@ -1,0 +1,25 @@
+table Basis
+	lineageTag: 7c17307c-6110-41c4-b9fb-22d13f9bc0c4
+
+	column Order
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d1a2650-e919-4e1f-bf2c-ebe0104550f3
+		summarizeBy: none
+		sourceColumn: [Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Basis
+		dataType: string
+		lineageTag: 43bf2625-d706-4e73-9818-26308f157dc3
+		summarizeBy: none
+		sourceColumn: [Basis]
+		sortByColumn: Order
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Basis = calculated
+		mode: import
+		source = DATATABLE("Order", INTEGER, "Basis", STRING, {{1,"MoM"},{2,"YoY"},{3,"YTD"}})
+

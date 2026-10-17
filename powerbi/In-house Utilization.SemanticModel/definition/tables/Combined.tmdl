@@ -1,0 +1,73 @@
+table Combined
+	lineageTag: b96813fc-59f5-47b6-ac91-bdc4bc898049
+
+	column vendor
+		dataType: string
+		lineageTag: c6c0cb9c-8f0d-411e-b57f-6fda4fe2afe7
+		summarizeBy: none
+		sourceColumn: vendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Job Type'
+		dataType: string
+		lineageTag: 83b8d036-b2c5-4e74-8181-92b6599ef06c
+		summarizeBy: none
+		sourceColumn: Job Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Volume
+		dataType: double
+		lineageTag: 19f19449-5b62-4c25-9986-f338b69e8ce3
+		summarizeBy: sum
+		sourceColumn: Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: dd10e689-3d2f-4966-a810-fdaab5f84937
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 9819a510-a068-4b91-a394-971876dc2f2e
+			defaultHierarchy: LocalDateTable_d248d199-97e6-4b2d-b7c6-4783be7ac7a4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ID
+		dataType: string
+		lineageTag: 188a9c7b-20c3-4ccc-9e9f-cc786fd93569
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Task Type'
+		dataType: string
+		lineageTag: d5cd83d2-4f86-4002-8030-8652b2de7149
+		summarizeBy: none
+		sourceColumn: Task Type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Combined = m
+		mode: import
+		source =
+				let
+				    Source = Table.Combine({Manual, Team_Tracker})
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

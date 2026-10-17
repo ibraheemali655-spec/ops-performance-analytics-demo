@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Clients Revenue Report- August 26"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2d54c0b5-253e-4db3-bf36-77cc89f5dd52"
+  }
+}

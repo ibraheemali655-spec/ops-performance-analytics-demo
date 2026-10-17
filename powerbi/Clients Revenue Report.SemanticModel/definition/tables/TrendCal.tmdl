@@ -1,0 +1,29 @@
+table TrendCal
+	lineageTag: d4834e51-e1d2-4d97-a166-753d0e0a12dd
+
+	column Year
+		lineageTag: ef11ac2c-9775-4402-846d-49a69fec5f49
+		isNameInferred
+		sourceColumn: DateTable[Year]
+
+	column 'Month Number'
+		lineageTag: b7d89839-cabd-49bd-b965-8037a4fa704e
+		isNameInferred
+		sourceColumn: DateTable[Month Number]
+
+	column Month
+		lineageTag: 5e9e19f3-207e-4118-8e73-9b68e1faa061
+		isNameInferred
+		sourceColumn: DateTable[Month]
+		sortByColumn: 'Month Number'
+
+	column 'Month Initial' = LEFT ( 'TrendCal'[Month], 1 ) & REPT ( UNICHAR ( 8203 ), 'TrendCal'[Month Number] )
+		dataType: string
+		lineageTag: 4c79ceef-ef99-4b32-a6ce-a3beb72e9904
+		summarizeBy: none
+		sortByColumn: 'Month Number'
+
+	partition TrendCal = calculated
+		mode: import
+		source = SUMMARIZE ( ALL ( 'DateTable' ), 'DateTable'[Year], 'DateTable'[Month Number], 'DateTable'[Month] )
+

@@ -1,0 +1,77 @@
+table Combined_Measures
+	lineageTag: 53156a3f-d99a-4682-978c-2f4a09b0d43c
+
+	measure 'Total Volume_Combined' = CALCULATE(SUM('Combined'[Volume]), 'Combined'[Task Type] <> BLANK())
+		formatString: #,0.00
+		lineageTag: 25db4575-2d23-47ad-b3ef-5dc7f04e8068
+
+	measure 'Vendor Capacity_Combined' =
+			
+			SUMX(
+			    FILTER(
+			        SUMMARIZE(
+			            'Combined',
+			            'Combined'[vendor],
+			            'Combined'[Date],
+			            'Combined'[Task Type]
+			        ),
+			        NOT ISBLANK('Combined'[Task Type])
+			    ),
+			    VAR OldCapacity =
+			        SWITCH(
+			            'Combined'[Task Type],
+			            "Shooting", 1500,
+			            "Revision", 3000,
+			            "MTPE", 3000,
+			            "QA", 8000,
+			            "Translation", 2000,
+			            0
+			        )
+			    VAR NewCapacity =
+			        SWITCH(
+			            'Combined'[Task Type],
+			            "Shooting", 1500,
+			            "Revision", 4000,
+			            "MTPE", 4000,
+			            "QA", 8000,
+			            "Translation", 3000,
+			            0
+			        )
+			    RETURN
+			        IF('Combined'[Date] >= DATE(2026, 9, 1), NewCapacity, OldCapacity)
+			)
+		formatString: #,0
+		lineageTag: cd86efdb-5662-4dfd-88ab-de2cc0cc360f
+
+	measure 'Utilization_Combined %' =
+			
+			DIVIDE([Total Volume_Combined], [Vendor Capacity_Combined])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: cc0227c7-b1fc-4ddb-a9c0-a47c81c14d89
+
+	measure 'Avg Monthly Volume_Combined' =
+			
+			DIVIDE(
+			    CALCULATE(SUM('Combined'[Volume]), 'Combined'[Task Type] <> BLANK()),
+			    COUNTROWS(VALUES('Combined'[Date]))
+			)
+		formatString: #,0.00
+		lineageTag: b2fcb454-4bb0-4e21-920d-2deae484c911
+
+	column Column
+		formatString: 0
+		lineageTag: 4ee9a805-a6ce-4545-8202-06ba2c85252f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Combined_Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = f93e63262c364268af50faead1548287
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

@@ -1,0 +1,29 @@
+expression DataRoot = "C:\ops-performance-analytics-demo\out\demo" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: cbdbc9a4-0132-5a27-a193-2a3342d3d1c0
+
+	annotation PBI_ResultType = Text
+
+expression 'Transform File (2)' =
+		let
+		    Source = (Parameter2 as binary) => let
+		    Source = Csv.Document(Parameter2,[Delimiter=",", Columns=16, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Change Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}, {"Column10", type text}, {"Column11", type text}, {"Column12", type text}, {"Column13", type text}, {"Column14", type text}, {"Column15", type text}, {"Column16", type text}})
+		in
+		    #"Change Type"
+		in
+		    Source
+	lineageTag: b1aa55c7-2c19-4dae-8d58-8eb53867983d
+
+	annotation PBI_ResultType = Function
+
+expression 'Sample File (2)' =
+		let
+		    Source = Folder.Files(DataRoot & "\jobs"),
+		    Navigation1 = Source{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 6d9f6a37-76fe-4dbf-92f1-a26787162f1d
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Binary

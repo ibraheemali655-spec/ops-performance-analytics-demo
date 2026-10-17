@@ -1,0 +1,8 @@
+EVALUATE
+CALCULATETABLE (
+    ROW (
+        "New",[New Clients],"Growing",[Growing Clients],"Declining",[Declining Clients],
+        "Stable",[Stable Clients],"Stale",[Stale Clients],"Dropped",[Dropped Clients]
+    ),
+    'DateTable'[Year] = 2026, 'DateTable'[Month Number] = 5
+)

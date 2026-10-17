@@ -1,0 +1,110 @@
+table Linguists
+	lineageTag: 0dd1b4e2-fa05-48d1-beb7-b7e5b2000bf4
+
+	column vendor
+		dataType: string
+		lineageTag: 3ce5be12-9a8f-4275-8824-c23e9b05c4b0
+		summarizeBy: none
+		sourceColumn: vendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Job Type'
+		dataType: string
+		lineageTag: 8f680702-5266-41dc-81f0-55a1d2fccded
+		summarizeBy: none
+		sourceColumn: Job Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Volume
+		dataType: double
+		lineageTag: 931e9482-d2ce-4e11-bbc0-7713317d671d
+		summarizeBy: sum
+		sourceColumn: Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6609d487-5978-4b50-b3dc-f807c0b5b102
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 8aaffc20-cfce-42ba-926c-1ce0bd113da3
+			defaultHierarchy: LocalDateTable_a4db1e62-120f-4505-96af-2736c698c8eb.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ID
+		dataType: string
+		lineageTag: 543b9a23-23f8-41ec-aab6-5346aff0c164
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Task Type'
+		dataType: string
+		lineageTag: 00b0f4fa-954f-41e3-9002-1919ad6af36f
+		summarizeBy: none
+		sourceColumn: Task Type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Linguists = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files(DataRoot & "\data\utilization\Linguists"),
+				    #"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? <> true),
+				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File (3)", each #"Transform File (3)"([Content])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File (3)"}),
+				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (3)", Table.ColumnNames(#"Transform File (3)"(#"Sample File (3)"))),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"Source.Name", type text}, {"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}, {"Column10", type text}, {"Column11", type text}, {"Column12", type text}, {"Column13", type text}, {"Column14", type text}, {"Column15", type text}, {"Column16", type text}}),
+				    #"Removed Top Rows" = Table.Skip(#"Changed Type",3),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Top Rows", [PromoteAllScalars=true]),
+				    #"Renamed Source" = Table.RenameColumns(#"Promoted Headers", {{Table.ColumnNames(#"Promoted Headers"){0}, "SourceFile"}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Source",{{"SourceFile", type text}, {"ID", type text}, {"Client, Legal Name", type text}, {"Project Name", type text}, {"Task, Language Combination, Short Name", type text}, {"Project, Specialization, Name", type text}, {"Job Type", type text}, {"Project, Volume", type text}, {"Deadline", type text}, {"Job Status", type text}, {"Project, Project Manager, Name", type text}, {"Vendor, Name", type text}, {"Vendor, Completed Jobs", type text}, {"Task, ROI", type text}, {"Total Cost [€]", type text}, {"Project, Total Agreed [€]", type text}, {"Project, Margin", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"SourceFile", "ID", "Client, Legal Name", "Project Name", "Task, Language Combination, Short Name", "Project, Specialization, Name", "Job Status", "Project, Project Manager, Name", "Vendor, Completed Jobs", "Task, ROI", "Total Cost [€]", "Project, Total Agreed [€]", "Project, Margin"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each true),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Filtered Rows",{"Vendor, Name", "Job Type", "Project, Volume", "Deadline"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"Vendor, Name", "Vendor"}, {"Project, Volume", "Volume"}, {"Deadline", "Date"}}),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Renamed Columns", "Date", Splitter.SplitTextByEachDelimiter({" "}, QuoteStyle.Csv, false), {"Date.1", "Date.2"}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Date.1", type text}, {"Date.2", type text}}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Changed Type2",{"Date.2"}),
+				    #"Split Column by Delimiter1" = Table.SplitColumn(#"Removed Columns1", "Date.1", Splitter.SplitTextByDelimiter("-", QuoteStyle.Csv), {"Date.1.1", "Date.1.2", "Date.1.3"}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Split Column by Delimiter1",{{"Date.1.1", type text}, {"Date.1.2", Int64.Type}, {"Date.1.3", Int64.Type}}),
+				    #"Merged Columns" = Table.CombineColumns(Table.TransformColumnTypes(#"Changed Type3", {{"Date.1.2", type text}, {"Date.1.3", type text}}, "en-IL"),{"Date.1.2", "Date.1.3"},Combiner.CombineTextByDelimiter("/", QuoteStyle.None),"Merged"),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Merged Columns",{{"Merged", type date}}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Changed Type4",{"Date.1.1"}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Columns2", {"Merged"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Removed Errors",{{"Vendor", "vendor"}, {"Merged", "Date"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns2", "ID", each "XTRF"),
+				    #"Changed Type5" = Table.TransformColumnTypes(#"Added Custom",{{"Volume", type number}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type5"," (In-House)","",Replacer.ReplaceText,{"vendor"}),
+				    #"Added Task Type" = Table.AddColumn(#"Replaced Value", "Task Type", each
+				        if [Job Type] = null then null else
+				        let jt = Text.Trim(Text.Lower([Job Type])) in
+				        if List.Contains({"translation"}, jt) then "Translation"
+				        else if List.Contains({"tep"}, jt) then "Shooting"
+				        else if List.Contains({"editing"}, jt) then "Revision"
+				        else if Text.StartsWith(jt, "mtpe") then "MTPE"
+				        else if List.Contains({"lqa", "proofreading"}, jt) then "QA"
+				        else null, type text),
+				    #"Filtered Rows1" = Table.SelectRows(#"Added Task Type", each true)
+				in
+				    #"Filtered Rows1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

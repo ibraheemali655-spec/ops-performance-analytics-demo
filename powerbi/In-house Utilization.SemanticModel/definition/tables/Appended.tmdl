@@ -1,0 +1,83 @@
+table Appended
+	lineageTag: 66c42c9a-4176-40ed-932c-5573e70e307d
+
+	column vendor
+		dataType: string
+		lineageTag: 92ca3153-095c-4cfc-af33-9ce6be86d425
+		summarizeBy: none
+		sourceColumn: vendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Job Type'
+		dataType: string
+		lineageTag: dd2eb9af-026d-4aa7-93c2-d61508c2345a
+		summarizeBy: none
+		sourceColumn: Job Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Volume
+		dataType: double
+		lineageTag: c993d898-a59e-4c09-9830-f59d6dc7140f
+		summarizeBy: sum
+		sourceColumn: Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3dfe3136-f02e-49a7-be1d-79cd5aa45df3
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 393ad9ff-2a73-48a7-9e0c-34d20b9e8d54
+			defaultHierarchy: LocalDateTable_79185cb5-f19c-4cdc-a33f-7de2b2ad1578.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ID
+		dataType: string
+		lineageTag: f6384b85-7955-4428-b0d2-d3ee8ee137b7
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team
+		dataType: string
+		lineageTag: 366586ea-2690-4b11-bdd8-332866ae3457
+		summarizeBy: none
+		sourceColumn: Team
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Task Type'
+		dataType: string
+		lineageTag: 2efa9f2f-c55c-4254-9142-d1b4e21962c8
+		summarizeBy: none
+		sourceColumn: Task Type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Appended = m
+		mode: import
+		source =
+				let
+				    Source = Table.Combine({Manual, Linguists}),
+				    #"Filtered Rows" = Table.SelectRows(Source, each true),
+				    #"Added Conditional Column" = Table.AddColumn(#"Filtered Rows", "Team", each if [vendor] = "Ulf Kowalski" then "Team A" else if [vendor] = "Amina Lindqvist" then "Team A" else if [vendor] = "Ulf Sato" then "Team B" else if [vendor] = "Oren Duarte" then "Team B" else "General")
+				in
+				    #"Added Conditional Column"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

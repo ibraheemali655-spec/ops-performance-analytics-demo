@@ -1,0 +1,77 @@
+table Measure_Manual
+	lineageTag: 5c8d007a-c2e6-4c6c-81da-cf21416280f6
+
+	measure 'Total Volume_Manual' = CALCULATE(SUM('Manual'[Volume]), 'Manual'[Task Type] <> BLANK())
+		formatString: #,0
+		lineageTag: 0d265759-356c-4d0a-9aad-b9faab3f377d
+
+	measure 'Vendor Capacity_Manual' =
+			
+			SUMX(
+			    FILTER(
+			        SUMMARIZE(
+			            'Manual',
+			            'Manual'[vendor],
+			            'Manual'[Date],
+			            'Manual'[Task Type]
+			        ),
+			        NOT ISBLANK('Manual'[Task Type])
+			    ),
+			    VAR OldCapacity =
+			        SWITCH(
+			            'Manual'[Task Type],
+			            "Shooting", 1500,
+			            "Revision", 3000,
+			            "MTPE", 3000,
+			            "QA", 8000,
+			            "Translation", 2000,
+			            0
+			        )
+			    VAR NewCapacity =
+			        SWITCH(
+			            'Manual'[Task Type],
+			            "Shooting", 1500,
+			            "Revision", 4000,
+			            "MTPE", 4000,
+			            "QA", 8000,
+			            "Translation", 3000,
+			            0
+			        )
+			    RETURN
+			        IF('Manual'[Date] >= DATE(2026, 9, 1), NewCapacity, OldCapacity)
+			)
+		formatString: #,0
+		lineageTag: 0e177e51-0a24-48b0-94cd-64a05ff3f689
+
+	measure 'Avg Monthly Volume_Manual' =
+			
+			DIVIDE(
+			    CALCULATE(SUM('Manual'[Volume]), 'Manual'[Task Type] <> BLANK()),
+			    COUNTROWS(VALUES('Manual'[Date]))
+			)
+		formatString: #,0
+		lineageTag: 155f5132-f14b-4acb-9c15-241c38c1fbc5
+
+	measure 'Utilization_Manual %' =
+			
+			DIVIDE([Total Volume_Manual], [Vendor Capacity_Manual])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 461f5f10-2fd7-4107-a85f-bf4825c10b04
+
+	column Column
+		formatString: 0
+		lineageTag: 9007b9d2-972f-477f-9756-de427ce7772f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Measure_Manual = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 8bd54371c3d446bbba390e5d8407ed82
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

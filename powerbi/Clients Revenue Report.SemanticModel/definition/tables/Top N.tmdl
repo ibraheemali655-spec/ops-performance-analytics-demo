@@ -1,0 +1,20 @@
+table 'Top N'
+	lineageTag: bb2ae70c-73e5-47e0-bb8e-a144127ced39
+
+	measure 'Top N Value' = SELECTEDVALUE('Top N'[Top N], 10)
+		formatString: 0
+		displayFolder: 03 Ranking
+		lineageTag: 05bb45b4-ef24-4e26-9cd6-3874f0d5cdd1
+
+	column 'Top N'
+		formatString: 0
+		lineageTag: e4c4b418-a3be-43a0-9acd-77fb6bf82210
+		summarizeBy: sum
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Top N' = calculated
+		mode: import
+		source = GENERATESERIES(5, 50, 5)
+
