@@ -24,6 +24,8 @@ Every name and number in this repository is generated. No company data is includ
 
 ## What I built
 
+![Monthly close pipeline](docs/img/etl-diagram.svg)
+
 - **An ETL** that turns each month's snapshot into one enriched file. It converts EUR to USD
   at each row's own month's rate. Every run re-sweeps the year to date for late jobs and
   orphan projects and appends what no earlier file holds.

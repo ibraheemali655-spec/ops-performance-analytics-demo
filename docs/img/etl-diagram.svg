@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-label="Monthly close pipeline: XTRF exports, the ETL with late-job and orphan recovery, and the Power BI reports">
+<style>svg{--bg:#F6F8F6;--ink:#333333;--muted:#5F6762;--line:#C9D1CB;--card:#FFFFFF;--etl:#EAF1EB;--green:#3A7D44;--red:#B8362A;--orange:#C96F0E;--orangebg:#FDF0E1;--redbg:#F8E7E5;--dark:#333333;--darkink:#FFFFFF;--darkmuted:#D7DBD8}
+.bg{fill:var(--bg)} text{font-family:Inter, 'Segoe UI', Calibri, Arial, sans-serif;fill:var(--ink)}
+.h1{font-size:22px;font-weight:700}
+.t{font-size:14px;font-weight:600} .s{font-size:11.5px;fill:var(--muted)}
+.node rect{fill:var(--card);stroke:var(--line);stroke-width:1}
+.node.k-late rect:first-child{fill:var(--redbg);stroke:var(--red)}
+.node.k-orphan rect:first-child{fill:var(--orangebg);stroke:var(--orange)}
+.node.k-late .stripe{fill:var(--red)} .node.k-orphan .stripe{fill:var(--orange)}
+.node.k-pbi rect,.node.k-report rect{fill:var(--dark);stroke:var(--dark)}
+.node.k-pbi text,.node.k-report text{fill:var(--darkink)} .node.k-pbi .s,.node.k-report .s{fill:var(--darkmuted)}
+.node.k-pbi .pbi-k{fill:var(--darkink);font-weight:600}
+.badge{fill:var(--card)} .node.k-late .badge{stroke:var(--red)} .node.k-orphan .badge{stroke:var(--orange)}
+.badge-t{font-size:11.5px;font-weight:700} .node.k-late .badge-t{fill:var(--red)} .node.k-orphan .badge-t{fill:var(--orange)}
+.etl rect{fill:var(--etl);stroke:var(--green);stroke-width:1.2}
+.etl-t{font-size:14px;font-weight:700;fill:var(--green);font-family:Consolas,'Cascadia Mono',monospace}
+.band rect{fill:none;stroke:var(--ink);stroke-dasharray:4 4}
+.band-t{font-size:12.5px;font-weight:600}
+.gate rect{fill:var(--card);stroke:var(--muted);stroke-dasharray:3 3}
+.gate-t{font-size:11px;fill:var(--muted)}
+.edge{fill:none;stroke:var(--muted);stroke-width:1.4} .edge.dashed{stroke-dasharray:4 3}
+.ah{fill:var(--muted)} .note{font-style:italic}
+</style>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 1 L9 5 L0 9 z"/></marker></defs>
+<rect class="bg" x="0" y="0" width="1200" height="700"/>
+<text class="h1" x="20" y="38">Monthly close: XTRF to Power BI</text>
+<text class="s" x="20" y="60">Python ETL that recovers revenue the monthly exports drop, run each month by an LLM agent</text>
+<g class="band" data-paths="late orphan util">
+<rect x="270" y="78" width="910" height="30" rx="15"/>
+<text class="band-t" x="290" y="98">LLM agent runs the close: fetch, enrich, then query the refreshed model and write the report</text></g>
+<g class="etl"><rect x="270" y="124" width="370" height="420" rx="10"/>
+<text class="etl-t" x="290" y="152">etl_enrich.py</text>
+<text class="s" x="402" y="152">one run per month</text></g>
+<g class="etl"><rect x="270" y="548" width="370" height="66" rx="10" class="etl-u"/></g>
+<g class="gate" data-paths="late orphan util"><rect x="900" y="208" width="146" height="24" rx="12"/><text class="gate-t" x="973" y="224" text-anchor="middle">manual refresh</text></g>
+<g class="gate" data-paths="util"><rect x="900" y="514" width="146" height="24" rx="12"/><text class="gate-t" x="973" y="530" text-anchor="middle">manual refresh</text></g>
+<path class="edge" data-paths="late" d="M230 158 C260 158 260 193 290 193" marker-end="url(#ah)"/>
+<path class="edge" data-paths="orphan" d="M230 230 C260 230 260 193 290 193" marker-end="url(#ah)"/>
+<path class="edge" data-paths="late orphan" d="M230 302 C260 302 260 317 290 317" marker-end="url(#ah)"/>
+<path class="edge" data-paths="late orphan" d="M455 218 L455 228" marker-end="url(#ah)"/>
+<path class="edge" data-paths="late orphan" d="M455 280 L455 290" marker-end="url(#ah)"/>
+<path class="edge" data-paths="late orphan" d="M455 342 L455 352" marker-end="url(#ah)"/>
+<path class="edge" data-paths="late orphan" d="M455 404 L455 414" marker-end="url(#ah)"/>
+<path class="edge" data-paths="late orphan" d="M455 466 L455 476" marker-end="url(#ah)"/>
+<path class="edge" data-paths="late orphan" d="M620 503 C720 503 790 450 790 358" marker-end="url(#ah)"/>
+<path class="edge dashed" data-paths="late" d="M705 356 C705 379 670 379 622 379" marker-end="url(#ah)"/>
+<path class="edge" data-paths="late orphan" d="M880 328 C900 328 900 300 918 300" marker-end="url(#ah)"/>
+<path class="edge" data-paths="late orphan" d="M1050 244 L1050 188" marker-end="url(#ah)"/>
+<path class="edge" data-paths="util" d="M230 498 C262 498 258 581 288 581" marker-end="url(#ah)"/>
+<path class="edge" data-paths="util" d="M230 570 C262 570 258 581 288 581" marker-end="url(#ah)"/>
+<path class="edge" data-paths="util" d="M620 581 C650 581 650 584 678 584" marker-end="url(#ah)"/>
+<path class="edge" data-paths="util" d="M880 584 C900 584 900 584 918 584" marker-end="url(#ah)"/>
+<text class="s note" x="632" y="400">checks earlier files</text>
+<g class="node k-src" id="s1" data-paths="late" tabindex="0" role="button" aria-label="XTRF Jobs view"><rect x="20" y="130" width="210" height="56" rx="6"/><text class="t" x="36" y="154">XTRF Jobs view</text><text class="s" x="36" y="171">monthly snapshot export</text></g>
+<g class="node k-src" id="s2" data-paths="orphan" tabindex="0" role="button" aria-label="XTRF Projects view"><rect x="20" y="202" width="210" height="56" rx="6"/><text class="t" x="36" y="226">XTRF Projects view</text><text class="s" x="36" y="243">projects and booked revenue</text></g>
+<g class="node k-src" id="s3" data-paths="late orphan" tabindex="0" role="button" aria-label="FX rates"><rect x="20" y="274" width="210" height="56" rx="6"/><text class="t" x="36" y="298">FX rates</text><text class="s" x="36" y="315">EUR to USD, one per month</text></g>
+<g class="node k-src" id="s4" data-paths="util" tabindex="0" role="button" aria-label="In-house tracker sheet"><rect x="20" y="470" width="210" height="56" rx="6"/><text class="t" x="36" y="494">In-house tracker sheet</text><text class="s" x="36" y="511">re-exported live each run</text></g>
+<g class="node k-src" id="s5" data-paths="util" tabindex="0" role="button" aria-label="Per-linguist exports"><rect x="20" y="542" width="210" height="56" rx="6"/><text class="t" x="36" y="566">Per-linguist exports</text><text class="s" x="36" y="583">in-house tasks from XTRF</text></g>
+<g class="node k-step" id="e1" data-paths="late orphan" tabindex="0" role="button" aria-label="Fetch both views"><rect x="290" y="168" width="330" height="50" rx="6"/><text class="t" x="306" y="189">Fetch both views</text><text class="s" x="306" y="206">API to raw dumps</text></g>
+<g class="node k-step" id="e2" data-paths="late orphan" tabindex="0" role="button" aria-label="Parse and find the header"><rect x="290" y="230" width="330" height="50" rx="6"/><text class="t" x="306" y="251">Parse and find the header</text><text class="s" x="306" y="268">under the export&#x27;s preamble</text></g>
+<g class="node k-step" id="e3" data-paths="late orphan" tabindex="0" role="button" aria-label="Convert at the row&#x27;s own month"><rect x="290" y="292" width="330" height="50" rx="6"/><text class="t" x="306" y="313">Convert at the row&#x27;s own month</text><text class="s" x="306" y="330">each row&#x27;s month, not the run&#x27;s</text></g>
+<g class="node k-late" id="e4" data-paths="late" tabindex="0" role="button" aria-label="Late-job sweep, year to date"><rect x="290" y="354" width="330" height="50" rx="6"/><rect class="stripe" x="290" y="354" width="5" height="50" rx="2"/><text class="t" x="306" y="375">Late-job sweep, year to date</text><text class="s" x="306" y="392">jobs no earlier file holds</text><rect class="badge" x="530" y="368" width="78" height="22" rx="11"/><text class="badge-t" x="569.0" y="383" text-anchor="middle">+637 rows</text></g>
+<g class="node k-orphan" id="e5" data-paths="orphan" tabindex="0" role="button" aria-label="Orphan sweep, year to date"><rect x="290" y="416" width="330" height="50" rx="6"/><rect class="stripe" x="290" y="416" width="5" height="50" rx="2"/><text class="t" x="306" y="437">Orphan sweep, year to date</text><text class="s" x="306" y="454">revenue booked, zero jobs</text><rect class="badge" x="530" y="430" width="78" height="22" rx="11"/><text class="badge-t" x="569.0" y="445" text-anchor="middle">+110 rows</text></g>
+<g class="node k-step" id="e6" data-paths="late orphan" tabindex="0" role="button" aria-label="Write the month file"><rect x="290" y="478" width="330" height="50" rx="6"/><text class="t" x="306" y="499">Write the month file</text><text class="s" x="306" y="516">atomic swap, safe to re-run</text></g>
+<g class="node k-step" id="e7" data-paths="util" tabindex="0" role="button" aria-label="Utilization inputs"><rect x="290" y="556" width="330" height="50" rx="6"/><text class="t" x="306" y="577">Utilization inputs</text><text class="s" x="306" y="594">tracker rows and linguist exports</text></g>
+<g class="node k-out" id="o1" data-paths="late orphan" tabindex="0" role="button" aria-label="Enriched Jobs CSV"><rect x="680" y="300" width="200" height="56" rx="6"/><text class="t" x="696" y="324">Enriched Jobs CSV</text><text class="s" x="696" y="341">one file per month</text></g>
+<g class="node k-out" id="o2" data-paths="util" tabindex="0" role="button" aria-label="Utilization CSVs"><rect x="680" y="556" width="200" height="56" rx="6"/><text class="t" x="696" y="580">Utilization CSVs</text><text class="s" x="696" y="597">status file and exports</text></g>
+<g class="node k-report" id="p3" data-paths="late orphan" tabindex="0" role="button" aria-label="Monthly CEO report"><rect x="920" y="130" width="260" height="56" rx="6"/><text class="t" x="936" y="154">Monthly CEO report</text><text class="s" x="936" y="171">agent runs DAX over MCP</text></g>
+<g class="node k-pbi" id="p1" data-paths="late orphan" tabindex="0" role="button" aria-label="Clients Revenue Report"><rect x="920" y="244" width="260" height="112" rx="6"/><text class="t" x="936" y="274">Clients Revenue Report</text><text class="s" x="936" y="291">Overview · AM · PM · Trend</text><text class="s pbi-k" x="936" y="318">Revenue</text><text class="s" x="1010" y="318">MoM · YoY · YTD</text><text class="s pbi-k" x="936" y="338">Books</text><text class="s" x="1010" y="338">per AM and PM</text></g>
+<g class="node k-pbi" id="p2" data-paths="util" tabindex="0" role="button" aria-label="In-house Utilization"><rect x="920" y="548" width="260" height="72" rx="6"/><text class="t" x="936" y="578">In-house Utilization</text><text class="s" x="936" y="595">volume against capacity</text></g>
+<text class="s" x="20" y="660">Late jobs: finalised after the month's snapshot, so absent from every monthly file. Orphans: revenue booked on a project with no job.</text>
+<text class="s" x="20" y="680">Row counts are from the production run; the public demo plants 320 late jobs and 110 orphans and recovers all of them.</text>
+</svg>
