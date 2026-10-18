@@ -13,7 +13,7 @@ Every name and number in this repository is generated. No company data is includ
 ## The problem
 
 - Each month, account managers sent scattered Excel reports, and someone consolidated them by
-  hand over about two working days.
+  hand over about a working week.
 - There were no metrics at all for project manager performance or for in-house linguist
   (production) performance.
 - Revenue was silently missing from the reports, and nobody could see it:
@@ -35,7 +35,7 @@ Every name and number in this repository is generated. No company data is includ
 - **An LLM agent that runs the monthly close.** It fetches the data and runs the ETL. After a
   manual refresh in Power BI, it queries the model over MCP and writes the narrative report.
 
-In production, the enrichment that used to take about two working days is a measured agent
+In production, the enrichment that used to take about a working week is a measured agent
 run of about 23 minutes. Its first runs recovered 637 job rows and 110 orphan project rows
 that had been missing from the reports.
 
