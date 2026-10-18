@@ -8,7 +8,9 @@ utilization.
 
 Every name and number in this repository is generated. No company data is included.
 
-![Client revenue overview](docs/img/revenue-overview.png)
+![The client revenue report in use](docs/img/powerbi-demo.gif)
+
+**[Watch the 80-second walkthrough](https://github.com/ibraheemali655-spec/ops-performance-analytics-demo/releases/download/v1.0/portfolio-walkthrough.mp4)**: the problem, the pipeline and both reports in use.
 
 ## The problem
 
@@ -36,8 +38,7 @@ Every name and number in this repository is generated. No company data is includ
   manual refresh in Power BI, it queries the model over MCP and writes the narrative report.
 
 In production, the enrichment that used to take about a working week is a measured agent
-run of about 23 minutes. Its first runs recovered 637 job rows and 110 orphan project rows
-that had been missing from the reports.
+run of about 23 minutes.
 
 ## What this repository proves
 
@@ -91,6 +92,8 @@ The same seed gives byte-identical output. The data lands in `out/demo/`:
    `C:\ops-performance-analytics-demo\out\demo`. If you cloned somewhere else, set it under
    **Transform data → Edit parameters**.
 4. Click **Refresh**.
+
+![Client revenue overview](docs/img/revenue-overview.png)
 
 | AM performance | PM performance |
 |---|---|
